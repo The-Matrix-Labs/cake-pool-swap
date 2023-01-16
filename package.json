@@ -11,6 +11,8 @@
   "dependencies": {
     "@mui/icons-material": "^5.11.0",
     "@rainbow-me/rainbowkit": "^0.8.1",
+    "abi-decoder": "^2.4.0",
+    "axios": "^1.2.2",
     "ethers": "^5.7.2",
     "plyr": "^3.7.3",
     "plyr-react": "^5.1.2",
