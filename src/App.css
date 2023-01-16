@@ -5,6 +5,22 @@
   text-align: center;
 }
 
+.copyActionButton {
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0);
+  color: white;
+  border: none;
+  width: 40px;
+}
+
+.copyActionButton-active {
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0);
+  color: #1a73e8;
+  border: none;
+  width: 40px;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
