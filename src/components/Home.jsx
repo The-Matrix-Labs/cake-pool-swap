@@ -1,8 +1,38 @@
 import React, { useState, useRef, useEffect } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { discord, logo, reddit, telegram, twitter, lock } from "../assets";
+import { useSigner, useProvider } from "wagmi";
+import { ethers } from "ethers";
+import Values from "../contract/values.json";
+import { tokenAbi, stakingAbi } from "../contract";
 
 function Home() {
+  const [totalStaked, setTotalStaked] = useState();
+  const [totalLocked, setTotalLocked] = useState();
+
+  const { data: signer, isError, isLoading } = useSigner();
+  const provider = useProvider();
+
+  useEffect(() => {
+    getPoolInfo();
+  }, [signer]);
+
+  const getPoolInfo = async () => {
+    let rpcUrl = Values.rpcURl;
+    let provider_ = new ethers.providers.JsonRpcProvider(rpcUrl);
+    let stake_temp = new ethers.Contract(
+      Values.stackingaddress,
+      stakingAbi,
+      provider_
+    );
+
+    var available = ethers.utils.formatEther(await stake_temp.available());
+    var locked = ethers.utils.formatEther(await stake_temp.totalLockedAmount());
+
+    setTotalStaked(Math.floor(available));
+    setTotalLocked(Math.floor(locked));
+  };
+
   return (
     <div className="flex flex-col justify-center ">
       <div className="flex w-full h-[4rem] bg-[#00A9BE] justify-between items-center p-2 ss:px-[3rem]">
@@ -69,7 +99,7 @@ function Home() {
               </div>
               <div className="flex flex-col  align-text-center justify-center gap-y-[1px] items-top">
                 <div className="text-white text-[1rem] leading-[1.2rem] font-thick ">
-                  252,226,093 CAKE
+                  {totalStaked} CAKE
                 </div>
               </div>
             </div>
@@ -141,7 +171,7 @@ function Home() {
                 Total locked:
               </div>
               <div className="text-gray-200/50 text-[1rem] leading-[1.3rem] ">
-                195,673,040 CAKE
+                {totalLocked} CAKE
               </div>
             </div>
             <div className="flex flex-row">
