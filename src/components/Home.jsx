@@ -30,12 +30,44 @@ function Home() {
   const { data: signer, isError, isLoading } = useSigner();
   const provider = useProvider();
   const [show, setShow] = useState(true);
+  const [colList, setColList] = useState(["Hash", "Account", "Action", "Time"]);
+  const [txlist, setTxList] = useState([]);
+  const [pages, setPages] = useState([]);
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
     getPoolInfo();
     getUserInfo();
-    fetchTx();
   }, [signer]);
+
+  useEffect(() => {
+    const fn = async () => {
+      var temp = await fetchTx();
+      setPages(temp);
+      setTxList(temp[page]);
+      console.log(temp);
+      temp.forEach((tx) => {
+        txlist.push(tx);
+      });
+    };
+    fn();
+  }, []);
+
+  const handleChangeUp = () => {
+    if (pages.length > page + 1) {
+      setPage(page + 1);
+      setTxList(pages[page]);
+    }
+  };
+
+  const handleChangeDown = () => {
+    if (page > 0) {
+      setPage(page - 1);
+      setTxList(pages[page]);
+    }
+  };
+
+  useEffect(() => {}, [txlist, page]);
 
   const getPoolInfo = async () => {
     let rpcUrl = Values.rpcURl;
@@ -98,7 +130,7 @@ function Home() {
     setShow(!show);
   };
 
-  useEffect(() => {}, [show]);
+  useEffect(() => {}, [show, txlist]);
 
   return (
     <div className="flex flex-col justify-center ">
@@ -287,7 +319,51 @@ function Home() {
         )}
       </div>
 
-      <div className="flex bg-[#035D68] rounded-xl p-6 px-[2rem] ss:mx-[9rem] ss:my-[5rem] my-[1rem] mx-[10px] justify-around flex-col "></div>
+      <div className="flex bg-[#035D68] rounded-xl p-6 px-[2rem] md:mx-[9rem] md:mb-[5rem] ss:mx-[2rem]  mb-[1rem] mx-[10px] justify-around flex-col ">
+        <div className="flex flex-row justify-between w-full mb-[2rem]">
+          {colList.map((col) => {
+            let l = colList.length + 1;
+            let widths = "w-1/" + l;
+            return (
+              <div
+                className={`text-white ${widths} font-bold ss:text-[0.8rem] text-center ss:leading-[1rem] text-[1rem] leading-[1.2rem]`}
+              >
+                {col}
+              </div>
+            );
+          })}
+        </div>
+        {txlist.map((tx, index) => {
+          let l = colList.length + 1;
+          let widths = "w-1/" + l;
+          return (
+            <div>
+              <div className="flex flex-row justify-between">
+                {colList.map((col) => {
+                  return (
+                    <div
+                      className={`${widths} ${
+                        col === "Hash" || col === "Account"
+                          ? "text-[#61ECFF]/75"
+                          : "text-gray-100/75"
+                      } truncate text-center`}
+                    >
+                      {tx[col.toLowerCase()]}
+                    </div>
+                  );
+                })}
+              </div>
+              {index !== txlist.length - 1 && (
+                <hr class="w-full h-px my-4 bg-gray-500/25 border-0 dark:bg-gray-400/25"></hr>
+              )}
+            </div>
+          );
+        })}
+        <div className="flex flex-row justify-end mt-[1rem]">
+          <div className="p-[20px] bg-white" onClick={handleChangeUp}></div>
+          <div className="p-[20px] bg-black" onClick={handleChangeDown}></div>
+        </div>
+      </div>
 
       <div className="flex ss:flex-row flex-col gap-y-[1rem] w-full min-h-[4rem] bg-[#00A9BE] justify-between items-center p-2 ss:px-[3rem]">
         <div className="flex flex-row  align-text-center justify-center gap-x-[10px]">
