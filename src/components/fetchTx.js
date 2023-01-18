@@ -50,7 +50,7 @@ export const fetchTx = async () => {
     pages.forEach((page) => {
       page.forEach(async (tx) => {
         var res = await decoder(tx.hash);
-        tx.amount = res.amount || 0;
+        tx.amount = Math.floor(res.amount * 100) / 100 || 0;
         tx.locktime = res.lockTime || 0;
       });
     });

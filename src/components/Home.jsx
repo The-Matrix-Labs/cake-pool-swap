@@ -16,6 +16,7 @@ import {
   leftArrow,
   rightArrow,
   lock1,
+  logo_top,
 } from "../assets";
 import { useSigner, useProvider } from "wagmi";
 import { ethers } from "ethers";
@@ -23,6 +24,7 @@ import Values from "../contract/values.json";
 import { tokenAbi, stakingAbi } from "../contract";
 import { fetchTx } from "./fetchTx";
 import { decoder } from "./decode";
+import { fn } from "./priceFinder";
 
 function Home() {
   const [totalStaked, setTotalStaked] = useState(0);
@@ -60,6 +62,8 @@ function Home() {
   const [page, setPage] = useState(0);
 
   useEffect(() => {}, [activeCol]);
+
+  fn();
 
   useEffect(() => {
     getPoolInfo();
@@ -178,7 +182,7 @@ function Home() {
               Token
             </div>
             <div className="flex flex-row  align-text-center gap-x-[10px] ss:justify-start justify-center">
-              <img src={logo} />
+              <img src={logo_top} />
               <div className="text-white items-center font-bold flex ">
                 Stake CAKE
               </div>
@@ -206,9 +210,9 @@ function Home() {
                 <div className="text-white text-[1rem] leading-[1.2rem] font-thick">
                   {amountLocked}
                 </div>
-                <div className="ss:text-white text-gray-200/50 items-center ss:justify-start font-thin flex text-[0.8rem] leading-[0.9rem] w-full">
+                {/* <div className="ss:text-white text-gray-200/50 items-center ss:justify-start font-thin flex text-[0.8rem] leading-[0.9rem] w-full">
                   1,878.01 USD
-                </div>
+                </div> */}
               </div>
             </div>
 
@@ -259,12 +263,12 @@ function Home() {
                   Cake Locked
                 </div>
                 <div className="ss:w-full w-[50%]">
-                  <div className="text-white font-bold ss:text-[2rem] text-[1.5rem] ss:leading-[1.7rem] leading-[1.3rem] mb-[5px]">
+                  <div className="text-white font-bold ss:text-[2rem] text-[1.5rem] ss:leading-[1.7rem] leading-[1.3rem] mb-[10px]">
                     {amountLocked}
                   </div>
-                  <div className="text-white items-center font-thin flex text-[0.8rem] leading-[0.9rem]">
+                  {/* <div className="text-white items-center font-thin flex text-[0.8rem] leading-[0.9rem]">
                     1,878.01 USD
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
@@ -273,7 +277,7 @@ function Home() {
                   Unlocks In
                 </div>
                 <div className="ss:w-full w-[50%]">
-                  <div className="text-white font-bold ss:text-[2rem] text-[1.5rem] ss:leading-[1.7rem] leading-[1.3rem] mb-[5px]">
+                  <div className="text-white font-bold ss:text-[2rem] text-[1.5rem] ss:leading-[1.7rem] leading-[1.3rem] mb-[10px]">
                     {lockDuration} Days
                   </div>
                   <div className="text-white items-center font-thin flex text-[0.8rem] leading-[0.9rem]">
@@ -286,7 +290,7 @@ function Home() {
                   Yield boost
                 </div>
                 <div className="ss:w-full w-[50%]">
-                  <div className="text-white font-bold ss:text-[2rem] text-[1.5rem] ss:leading-[1.7rem] leading-[1.3rem] mb-[5px]">
+                  <div className="text-white font-bold ss:text-[2rem] text-[1.5rem] ss:leading-[1.7rem] leading-[1.3rem] mb-[10px]">
                     {boostYield}x
                   </div>
                   <div className="text-white items-center font-thin flex text-[0.8rem] leading-[0.9rem]">
@@ -408,9 +412,21 @@ function Home() {
                     <div
                       className={` w-1/4 ${
                         col === "Hash" || col === "Account"
-                          ? "text-[#61ECFF]/75"
+                          ? "text-[#61ECFF]/75 cursor-pointer"
                           : "text-gray-100/75"
                       } truncate text-center`}
+                      onClick={() => {
+                        if (col === "Hash")
+                          window.open(
+                            "https://bscscan.com/tx/" + tx[col.toLowerCase()]
+                          );
+                        else if (col === "Account") {
+                          window.open(
+                            "https://bscscan.com/address/" +
+                              tx[col.toLowerCase()]
+                          );
+                        }
+                      }}
                     >
                       {tx[col.toLowerCase()]}
                     </div>
@@ -470,6 +486,18 @@ function Home() {
                           ? "text-[#61ECFF]/75"
                           : "text-gray-100/75"
                       } truncate text-center px-3`}
+                      onClick={() => {
+                        if (col === "Hash")
+                          window.open(
+                            "https://bscscan.com/tx/" + tx[col.toLowerCase()]
+                          );
+                        else if (col === "Account") {
+                          window.open(
+                            "https://bscscan.com/address/" +
+                              tx[col.toLowerCase()]
+                          );
+                        }
+                      }}
                     >
                       {tx[col.toLowerCase()]}
                     </div>
@@ -502,10 +530,38 @@ function Home() {
           <div className="text-white items-center flex">Cakepool</div>
         </div>
         <div className="flex flex-row gap-x-[10px]">
-          <img src={telegram} alt="" />
-          <img src={twitter} alt="" />
-          <img src={reddit} alt="" />
-          <img src={discord} alt="" />
+          <img
+            src={telegram}
+            alt=""
+            className="cursor-pointer"
+            onClick={() => {
+              window.open("https://t.me/CakePoolStaking");
+            }}
+          />
+          <img
+            src={twitter}
+            alt=""
+            className="cursor-pointer"
+            onClick={() => {
+              window.open("https://twitter.com/CakePoolTweets");
+            }}
+          />
+          <img
+            src={reddit}
+            alt=""
+            className="cursor-pointer"
+            onClick={() => {
+              window.open("https://www.reddit.com/r/CakePool");
+            }}
+          />
+          <img
+            src={discord}
+            alt=""
+            className="cursor-pointer"
+            onClick={() => {
+              window.open("https://discord.gg/XdacqRMKbq");
+            }}
+          />
         </div>
       </div>
     </div>

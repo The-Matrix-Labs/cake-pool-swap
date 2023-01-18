@@ -31,7 +31,29 @@ const getLockTime = (logs) => {
       );
     }
   });
-  return lockTime;
+
+  let a = Math.floor(lockTime / 3600 / 24);
+  let weeks = 0;
+  let days = 0;
+  let years = 0;
+  years = Math.floor(a / 365);
+  if (a % 365) {
+    weeks = Math.floor((a % 365) / 7);
+    if ((a % 365) % 7) {
+      days = Math.floor((a % 365) % 7);
+    }
+  }
+  let total = "";
+  if (years) {
+    total += years + " years ";
+  }
+  if (weeks) {
+    total += weeks + " weeks ";
+  }
+  if (days) {
+    total += days + " days ";
+  }
+  return total;
 };
 
 export const decoder = async (hash) => {

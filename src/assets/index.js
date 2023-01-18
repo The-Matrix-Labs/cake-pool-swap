@@ -13,6 +13,7 @@ import arrowDown from "./arrowDown.png";
 import leftArrow from "./leftArrow.png";
 import rightArrow from "./rightArrow.png";
 import lock1 from "./lock1.svg";
+import logo_top from "./logo_top.png";
 
 export {
   logo,
@@ -30,4 +31,5 @@ export {
   leftArrow,
   rightArrow,
   lock1,
+  logo_top
 };
