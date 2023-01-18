@@ -7,6 +7,12 @@ import lock from "./lock.png";
 import arrow from "./arrow.png";
 import metamask from "./metamask.png";
 import bscScan from "./BscScan.webp";
+import close from "./close.svg";
+import menu from "./menu.svg";
+import arrowDown from "./arrowDown.png";
+import leftArrow from "./leftArrow.png";
+import rightArrow from "./rightArrow.png";
+import lock1 from "./lock1.svg";
 
 export {
   logo,
@@ -18,4 +24,10 @@ export {
   arrow,
   metamask,
   bscScan,
+  menu,
+  close,
+  arrowDown,
+  leftArrow,
+  rightArrow,
+  lock1,
 };

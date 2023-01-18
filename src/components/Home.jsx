@@ -10,12 +10,19 @@ import {
   arrow,
   metamask,
   bscScan,
+  close,
+  menu,
+  arrowDown,
+  leftArrow,
+  rightArrow,
+  lock1,
 } from "../assets";
 import { useSigner, useProvider } from "wagmi";
 import { ethers } from "ethers";
 import Values from "../contract/values.json";
 import { tokenAbi, stakingAbi } from "../contract";
 import { fetchTx } from "./fetchTx";
+import { decoder } from "./decode";
 
 function Home() {
   const [totalStaked, setTotalStaked] = useState(0);
@@ -30,10 +37,29 @@ function Home() {
   const { data: signer, isError, isLoading } = useSigner();
   const provider = useProvider();
   const [show, setShow] = useState(true);
-  const [colList, setColList] = useState(["Hash", "Account", "Action", "Time"]);
+  const [colList, setColList] = useState([
+    "Hash",
+    "Account",
+    "Action",
+    "Time",
+    "Amount",
+    "LockTime",
+  ]);
+  const [activeCol, setActiveCol] = useState(0);
+  const [colListSmall, setColListSmall] = useState(["Hash", "Account"]);
+  const [dropDown, setDropDown] = useState(false);
+
+  const [options, setOptions] = useState([
+    "Action",
+    "Time",
+    "Amount",
+    "LockTime",
+  ]);
   const [txlist, setTxList] = useState([]);
   const [pages, setPages] = useState([]);
   const [page, setPage] = useState(0);
+
+  useEffect(() => {}, [activeCol]);
 
   useEffect(() => {
     getPoolInfo();
@@ -46,9 +72,9 @@ function Home() {
       setPages(temp);
       setTxList(temp[page]);
       console.log(temp);
-      temp.forEach((tx) => {
-        txlist.push(tx);
-      });
+      // temp.forEach((tx) => {
+      //   txlist.push(tx);
+      // });
     };
     fn();
   }, []);
@@ -130,7 +156,11 @@ function Home() {
     setShow(!show);
   };
 
-  useEffect(() => {}, [show, txlist]);
+  const handleDropDown = () => {
+    setDropDown(!dropDown);
+  };
+
+  useEffect(() => {}, [show, txlist, dropDown]);
 
   return (
     <div className="flex flex-col justify-center ">
@@ -139,7 +169,7 @@ function Home() {
           <img src={logo} />
           <div className="text-white items-center flex">Cakepool</div>
         </div>
-        <ConnectButton />
+        {!signer && <ConnectButton />}
       </div>
       <div className="flex bg-[#035D68] rounded-xl p-6 px-[2rem] md:mx-[9rem] md:my-[5rem] ss:mx-[2rem]  my-[1rem] mx-[10px] justify-around flex-col ">
         <div className="flex w-full justify-between ss:flex-row flex-col gap-y-[0.3rem]">
@@ -273,7 +303,11 @@ function Home() {
                     My Position
                   </div>
                   <div className="flex flex-row bg-[#00A9BE] rounded-md p-1">
-                    <img src={lock} alt="" className="h-[20px] w-[20px]" />
+                    <img
+                      src={lock}
+                      alt=""
+                      className="fill-green-400 h-[20px] w-[20px]"
+                    />
                     <div className="text-white text-[1rem] leading-[1.3rem]">
                       {isLocked ? "Locked" : "Unlocked"}
                     </div>
@@ -296,22 +330,22 @@ function Home() {
                   </div>
                 </div>
               </div>
-              <div className="flex ss:flex-row flex-wrap-row ss:w-[60%] w-[100%] justify-around flex-wrap text-center ss:m-0 mt-[1.5rem] gap-y-[1.7rem]">
-                <div className="text-[#61ECFF] underline decoration-[#61ECFF] ss:w-auto w-[48%] flex flex-row">
+              <div className="flex ss:flex-row flex-wrap-row ss:w-[70%] w-[100%] justify-around flex-wrap text-center ss:m-0 mt-[1.5rem] gap-y-[1.7rem]">
+                <div className="text-[#61ECFF] items-center underline decoration-[#61ECFF] ss:w-auto w-[48%] flex flex-row gap-x-[5px]">
                   See token info
                   <img src={arrow} className="w-[20px] h-[20px]" alt="" />
                 </div>
-                <div className="text-[#61ECFF] underline decoration-[#61ECFF] ss:w-auto w-[48%] flex flex-row">
+                <div className="text-[#61ECFF] items-center underline decoration-[#61ECFF] ss:w-auto w-[48%] flex flex-row gap-x-[5px] pl-[6px] ">
                   View tutorial
                   <img src={arrow} className="w-[20px] h-[20px]" alt="" />
                 </div>
-                <div className="text-[#61ECFF] underline decoration-[#61ECFF] ss:w-auto w-[48%] flex flex-row gap-x-[5px]">
+                <div className="text-[#61ECFF] items-center underline decoration-[#61ECFF] ss:w-auto w-[48%] flex flex-row gap-x-[5px]">
                   View contract
                   <img src={bscScan} className="w-[20px] h-[20px]" alt="" />
                 </div>
-                <div className="text-[#61ECFF] underline decoration-[#61ECFF] ss:w-auto w-[48%] flex flex-row whitespace-nowrap gap-x-[5px]">
+                <div className="text-[#61ECFF] items-center underline decoration-[#61ECFF] ss:w-auto w-[48%] flex flex-row whitespace-nowrap gap-x-[5px]">
                   Add to Wallet
-                  <img src={metamask} className="w-[20px] h-[20px]" alt="" />
+                  <img src={metamask} className="w-[22px] h-[22px]" alt="" />
                 </div>
               </div>
             </div>
@@ -319,14 +353,105 @@ function Home() {
         )}
       </div>
 
-      <div className="flex bg-[#035D68] rounded-xl p-6 px-[2rem] md:mx-[9rem] md:mb-[5rem] ss:mx-[2rem]  mb-[1rem] mx-[10px] justify-around flex-col ">
+      <div className="flex ss:hidden flex bg-[#035D68] rounded-xl p-6 px-[2rem] md:mx-[9rem] md:mb-[5rem] ss:mx-[2rem]  mb-[1rem] mx-[10px] justify-around flex-col ">
         <div className="flex flex-row justify-between w-full mb-[2rem]">
-          {colList.map((col) => {
-            let l = colList.length + 1;
-            let widths = "w-1/" + l;
+          {colListSmall.map((col) => {
             return (
               <div
-                className={`text-white ${widths} font-bold ss:text-[0.8rem] text-center ss:leading-[1rem] text-[1rem] leading-[1.2rem]`}
+                className={`text-white w-1/3 font-bold ss:text-[0.8rem] text-center ss:leading-[1rem] text-[1rem] leading-[1.2rem]`}
+              >
+                {col}
+              </div>
+            );
+          })}
+          <div
+            className={`flex flex-row gap-x-[8px] justify-end text-white w-1/3 font-bold ss:text-[0.8rem] text-center ss:leading-[1rem] text-[1rem] leading-[1.2rem]`}
+          >
+            {options[activeCol]}
+            <div className="ss:hidden flex justify-end items-center relative">
+              <img
+                src={dropDown ? close : arrowDown}
+                alt="menu"
+                className="w-[13px] h-[13px] object-contain"
+                onClick={() => setDropDown(!dropDown)}
+              />
+              <div
+                className={`${
+                  !dropDown ? "hidden" : "flex"
+                } p-6 absolute z-[99] top-5 -right-1/2 min-w-[140px] rounded-xl sidebar bg-[#027785]`}
+              >
+                <ul className="list-none flex justify-end items-start flex-1 flex-col">
+                  {options.map((nav, index) => (
+                    <li
+                      key={nav}
+                      className={`font-poppins font-medium cursor-pointer text-[16px] ${
+                        activeCol === index
+                          ? "green__gradient__text text-slate-100"
+                          : "text-dimWhite"
+                      } ${index === options.length - 1 ? "mb-0" : "mb-4"}`}
+                      onClick={() => setActiveCol(index)}
+                    >
+                      <a>{nav}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        {txlist.map((tx, index) => {
+          return (
+            <div className="z-[1]">
+              <div className="flex flex-row justify-around">
+                {colListSmall.map((col) => {
+                  return (
+                    <div
+                      className={` w-1/4 ${
+                        col === "Hash" || col === "Account"
+                          ? "text-[#61ECFF]/75"
+                          : "text-gray-100/75"
+                      } truncate text-center`}
+                    >
+                      {tx[col.toLowerCase()]}
+                    </div>
+                  );
+                })}
+                <div
+                  className={` w-1/4 ${
+                    options[0] === "Hash" || options[0] === "Account"
+                      ? "text-[#61ECFF]/75"
+                      : "text-gray-100/75"
+                  } truncate text-center`}
+                >
+                  {tx[options[activeCol].toLowerCase()]}
+                </div>
+              </div>
+              {index !== txlist.length - 1 && (
+                <hr class="w-full h-px my-4 bg-gray-500/25 border-0 dark:bg-gray-400/25"></hr>
+              )}
+            </div>
+          );
+        })}
+        <div className="flex flex-row justify-end mt-[1rem]">
+          <img
+            src={leftArrow}
+            className="h-[20px] w-[20px]"
+            onClick={handleChangeUp}
+          />
+          <img
+            src={rightArrow}
+            className="h-[20px] w-[20px]"
+            onClick={handleChangeDown}
+          />
+        </div>
+      </div>
+
+      <div className="flex ss:flex hidden bg-[#035D68] rounded-xl p-6 px-[2rem] md:mx-[9rem] md:mb-[5rem] ss:mx-[2rem]  mb-[1rem] mx-[10px] justify-around flex-col ">
+        <div className="flex flex-row justify-between w-full mb-[2rem]">
+          {colList.map((col) => {
+            return (
+              <div
+                className={`text-white w-1/6 font-bold ss:text-[0.8rem] text-center ss:leading-[1rem] text-[1rem] leading-[1.2rem]`}
               >
                 {col}
               </div>
@@ -334,19 +459,17 @@ function Home() {
           })}
         </div>
         {txlist.map((tx, index) => {
-          let l = colList.length + 1;
-          let widths = "w-1/" + l;
           return (
             <div>
               <div className="flex flex-row justify-between">
                 {colList.map((col) => {
                   return (
                     <div
-                      className={`${widths} ${
+                      className={` w-1/6 ${
                         col === "Hash" || col === "Account"
                           ? "text-[#61ECFF]/75"
                           : "text-gray-100/75"
-                      } truncate text-center`}
+                      } truncate text-center px-3`}
                     >
                       {tx[col.toLowerCase()]}
                     </div>
@@ -360,8 +483,16 @@ function Home() {
           );
         })}
         <div className="flex flex-row justify-end mt-[1rem]">
-          <div className="p-[20px] bg-white" onClick={handleChangeUp}></div>
-          <div className="p-[20px] bg-black" onClick={handleChangeDown}></div>
+          <img
+            src={leftArrow}
+            className="h-[30px] w-[30px]"
+            onClick={handleChangeUp}
+          />
+          <img
+            src={rightArrow}
+            className="h-[30px] w-[30px]"
+            onClick={handleChangeDown}
+          />
         </div>
       </div>
 
