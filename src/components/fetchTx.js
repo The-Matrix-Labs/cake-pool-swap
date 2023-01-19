@@ -18,32 +18,34 @@ export const fetchTx = async () => {
 
   const pages = [];
   var txList = [];
-  await axios
-    .get(url)
-    .then((response) => {
-      console.log(response.data);
-      response.data.result.map((data) => {
-        var account =
-          data.to != Values.stackingaddress.toLocaleLowerCase()
-            ? data.to
-            : data.from;
-        var temp = {
-          account: account,
-          input: data.input,
-          hash: data.hash,
-          action: data.functionName.split("(")[0],
-          time: data.timeStamp,
-        };
-        txList.push(temp);
-        if (txList.length === 10) {
-          pages.push(txList);
-          txList = [];
-        }
+  try {
+    await axios
+      .get(url)
+      .then((response) => {
+        console.log(response.data);
+        response.data.result.map((data) => {
+          var account =
+            data.to != Values.stackingaddress.toLocaleLowerCase()
+              ? data.to
+              : data.from;
+          var temp = {
+            account: account,
+            input: data.input,
+            hash: data.hash,
+            action: data.functionName.split("(")[0],
+            time: data.timeStamp,
+          };
+          txList.push(temp);
+          if (txList.length === 10) {
+            pages.push(txList);
+            txList = [];
+          }
+        });
+      })
+      .catch((error) => {
+        console.log(error.message);
       });
-    })
-    .catch((error) => {
-      console.log(error.message);
-    });
+  } catch (error) {}
   // console.log(txList);
 
   const fn = async () => {
@@ -55,6 +57,10 @@ export const fetchTx = async () => {
       });
     });
   };
-  await fn();
-  return pages;
+
+  try {
+    await fn();
+  } catch (error) {}
+
+  return pages || [[]];
 };

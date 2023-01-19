@@ -17,6 +17,7 @@ import {
   rightArrow,
   lock1,
   logo_top,
+  unlock,
 } from "../assets";
 import { useSigner, useProvider } from "wagmi";
 import { ethers } from "ethers";
@@ -24,7 +25,11 @@ import Values from "../contract/values.json";
 import { tokenAbi, stakingAbi } from "../contract";
 import { fetchTx } from "./fetchTx";
 import { decoder } from "./decode";
-import { fn } from "./priceFinder";
+// import { priceFinder } from "./priceFinder";
+import {
+  // searchPairsMatchingQuery,
+  searchPairsMatchingQuery,
+} from "dexscreener-api";
 
 function Home() {
   const [totalStaked, setTotalStaked] = useState(0);
@@ -60,15 +65,33 @@ function Home() {
   const [txlist, setTxList] = useState([]);
   const [pages, setPages] = useState([]);
   const [page, setPage] = useState(0);
+  const [usdPrice, setUsdPrice] = useState(0);
 
   useEffect(() => {}, [activeCol]);
 
-  fn();
+  // let usdPrice = priceFinder();
+  // console.log(usdPrice);
+
+  const priceFinder = async () => {
+    // Get pairs matching base token address
+    // const tokensResponse = await getPairsMatchingBaseTokenAddress(
+    //   "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82"
+    // );
+    const searchResponse = await searchPairsMatchingQuery("CAKE USDT");
+    const val = searchResponse.pairs?.find(
+      (data) => data.dexId === "pancakeswap"
+    );
+    console.log(val.priceUsd);
+    setUsdPrice(val.priceUsd || 0);
+  };
 
   useEffect(() => {
     getPoolInfo();
     getUserInfo();
+    priceFinder();
   }, [signer]);
+
+  useEffect(() => {}, [usdPrice]);
 
   useEffect(() => {
     const fn = async () => {
@@ -84,18 +107,28 @@ function Home() {
   }, []);
 
   const handleChangeUp = () => {
+    console.log("up");
     if (pages.length > page + 1) {
-      setPage(page + 1);
-      setTxList(pages[page]);
+      var temp = page + 1;
+      setPage(temp);
+      setTxList(pages[temp]);
     }
   };
 
   const handleChangeDown = () => {
     if (page > 0) {
-      setPage(page - 1);
-      setTxList(pages[page]);
+      var temp = page - 1;
+      setPage(temp);
+      setTxList(pages[temp]);
     }
   };
+
+  useEffect(() => {
+    const fn = async () => {
+      await priceFinder();
+    };
+    fn();
+  });
 
   useEffect(() => {}, [txlist, page]);
 
@@ -164,7 +197,40 @@ function Home() {
     setDropDown(!dropDown);
   };
 
+  useEffect(() => {}, [signer]);
+
   useEffect(() => {}, [show, txlist, dropDown]);
+
+  const addToToken = async () => {
+    const tokenAddress = "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82";
+    const tokenSymbol = "CAKE";
+    const tokenDecimals = 18;
+    const tokenImage = "";
+
+    try {
+      // wasAdded is a boolean. Like any RPC method, an error may be thrown.
+      const wasAdded = await ethereum.request({
+        method: "wallet_watchAsset",
+        params: {
+          type: "ERC20", // Initially only supports ERC20, but eventually more!
+          options: {
+            address: tokenAddress, // The address that the token is at.
+            symbol: tokenSymbol, // A ticker symbol or shorthand, up to 5 chars.
+            decimals: tokenDecimals, // The number of decimals in the token
+            image: tokenImage, // A string url of the token logo
+          },
+        },
+      });
+
+      if (wasAdded) {
+        console.log("Thanks for your interest!");
+      } else {
+        console.log("Your loss!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="flex flex-col justify-center ">
@@ -210,9 +276,9 @@ function Home() {
                 <div className="text-white text-[1rem] leading-[1.2rem] font-thick">
                   {amountLocked}
                 </div>
-                {/* <div className="ss:text-white text-gray-200/50 items-center ss:justify-start font-thin flex text-[0.8rem] leading-[0.9rem] w-full">
-                  1,878.01 USD
-                </div> */}
+                <div className="ss:text-white text-gray-200/50 items-center ss:justify-start font-thin flex text-[0.8rem] leading-[0.9rem] w-full">
+                  {Math.floor(usdPrice * amountLocked * 1000) / 1000} USD
+                </div>
               </div>
             </div>
 
@@ -245,7 +311,7 @@ function Home() {
             onClick={() => {
               handleToggle();
             }}
-            className="transition ease-in-out duration-550 text-[#61ECFF] ss:text-[1.5rem] text-[1.2rem] ss:leading-[1.6rem] leading-[1.4rem] ss:w-[20%] w-full ss:text-center text-end"
+            className="transition ease-in-out duration-550 text-[#61ECFF] cursor-pointer ss:text-[1.5rem] text-[1.2rem] ss:leading-[1.6rem] leading-[1.4rem] ss:w-[20%] w-full ss:text-center text-end"
           >
             Hide
           </div>
@@ -266,9 +332,9 @@ function Home() {
                   <div className="text-white font-bold ss:text-[2rem] text-[1.5rem] ss:leading-[1.7rem] leading-[1.3rem] mb-[10px]">
                     {amountLocked}
                   </div>
-                  {/* <div className="text-white items-center font-thin flex text-[0.8rem] leading-[0.9rem]">
-                    1,878.01 USD
-                  </div> */}
+                  <div className="text-white items-center font-thin flex text-[0.8rem] leading-[0.9rem]">
+                    {Math.floor(usdPrice * amountLocked * 1000) / 1000} USD
+                  </div>
                 </div>
               </div>
 
@@ -308,7 +374,7 @@ function Home() {
                   </div>
                   <div className="flex flex-row bg-[#00A9BE] rounded-md p-1">
                     <img
-                      src={lock}
+                      src={isLocked ? lock : unlock}
                       alt=""
                       className="fill-green-400 h-[20px] w-[20px]"
                     />
@@ -335,19 +401,43 @@ function Home() {
                 </div>
               </div>
               <div className="flex ss:flex-row flex-wrap-row ss:w-[70%] w-[100%] justify-around flex-wrap text-center ss:m-0 mt-[1.5rem] gap-y-[1.7rem]">
-                <div className="text-[#61ECFF] items-center underline decoration-[#61ECFF] ss:w-auto w-[48%] flex flex-row gap-x-[5px]">
+                <div
+                  className="text-[#61ECFF] items-center underline decoration-[#61ECFF] ss:w-auto w-[48%] flex flex-row gap-x-[5px] cursor-pointer"
+                  onClick={() => {
+                    window.open(
+                      "https://pancakeswap.finance/info/token/0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82"
+                    );
+                  }}
+                >
                   See token info
                   <img src={arrow} className="w-[20px] h-[20px]" alt="" />
                 </div>
-                <div className="text-[#61ECFF] items-center underline decoration-[#61ECFF] ss:w-auto w-[48%] flex flex-row gap-x-[5px] pl-[6px] ">
+                <div
+                  className="text-[#61ECFF] items-center underline decoration-[#61ECFF] ss:w-auto w-[48%] flex flex-row gap-x-[5px] pl-[6px] cursor-pointer"
+                  onClick={() => {
+                    window.open(
+                      "https://docs.pancakeswap.finance/products/syrup-pool/new-cake-pool"
+                    );
+                  }}
+                >
                   View tutorial
                   <img src={arrow} className="w-[20px] h-[20px]" alt="" />
                 </div>
-                <div className="text-[#61ECFF] items-center underline decoration-[#61ECFF] ss:w-auto w-[48%] flex flex-row gap-x-[5px]">
+                <div
+                  className="text-[#61ECFF] items-center underline decoration-[#61ECFF] ss:w-auto w-[48%] flex flex-row gap-x-[5px] cursor-pointer"
+                  onClick={() => {
+                    window.open(
+                      "https://bscscan.com/address/0x45c54210128a065de780C4B0Df3d16664f7f859e"
+                    );
+                  }}
+                >
                   View contract
                   <img src={bscScan} className="w-[20px] h-[20px]" alt="" />
                 </div>
-                <div className="text-[#61ECFF] items-center underline decoration-[#61ECFF] ss:w-auto w-[48%] flex flex-row whitespace-nowrap gap-x-[5px]">
+                <div
+                  className="text-[#61ECFF] items-center underline decoration-[#61ECFF] ss:w-auto w-[48%] flex flex-row whitespace-nowrap gap-x-[5px] cursor-pointer"
+                  onClick={addToToken}
+                >
                   Add to Wallet
                   <img src={metamask} className="w-[22px] h-[22px]" alt="" />
                 </div>
@@ -376,7 +466,7 @@ function Home() {
               <img
                 src={dropDown ? close : arrowDown}
                 alt="menu"
-                className="w-[13px] h-[13px] object-contain"
+                className={`w-[13px] h-[13px] object-contain`}
                 onClick={() => setDropDown(!dropDown)}
               />
               <div
@@ -451,12 +541,16 @@ function Home() {
         <div className="flex flex-row justify-end mt-[1rem]">
           <img
             src={leftArrow}
-            className="h-[20px] w-[20px]"
+            className={`h-[20px] w-[20px] ${
+              page === 0 ? "opacity-25" : "opacity-100"
+            }`}
             onClick={handleChangeUp}
           />
           <img
             src={rightArrow}
-            className="h-[20px] w-[20px]"
+            className={`h-[20px] w-[20px] ${
+              page + 1 === pages.length ? "opacity-25" : "opacity-100"
+            }`}
             onClick={handleChangeDown}
           />
         </div>
@@ -483,7 +577,7 @@ function Home() {
                     <div
                       className={` w-1/6 ${
                         col === "Hash" || col === "Account"
-                          ? "text-[#61ECFF]/75"
+                          ? "text-[#61ECFF]/75 cursor-pointer"
                           : "text-gray-100/75"
                       } truncate text-center px-3`}
                       onClick={() => {
@@ -513,13 +607,17 @@ function Home() {
         <div className="flex flex-row justify-end mt-[1rem]">
           <img
             src={leftArrow}
-            className="h-[30px] w-[30px]"
-            onClick={handleChangeUp}
+            className={`h-[30px] w-[30px] ${
+              page === 0 ? "opacity-25" : "opacity-100"
+            }`}
+            onClick={handleChangeDown}
           />
           <img
             src={rightArrow}
-            className="h-[30px] w-[30px]"
-            onClick={handleChangeDown}
+            className={`h-[30px] w-[30px] ${
+              page + 1 === pages.length ? "opacity-25" : "opacity-100"
+            }`}
+            onClick={handleChangeUp}
           />
         </div>
       </div>
