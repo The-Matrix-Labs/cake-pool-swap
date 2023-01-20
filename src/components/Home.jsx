@@ -355,7 +355,7 @@ function Home() {
             className="text-[#61ECFF]  cursor-pointer ss:text-[1.5rem] text-[1.2rem] ss:leading-[1.6rem] leading-[1.4rem] ss:w-[20%] w-full ss:text-center text-end"
           >
             <div className="flex flex-row items-center ss:justify-center justify-end gap-x-[15px]">
-              {show ? "Hide" : "Show"}
+              {show ? "Hide" : "Unhide"}
               <img
                 src={arrowDown}
                 alt=""
