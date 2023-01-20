@@ -68,8 +68,7 @@ function Home() {
   const [pages, setPages] = useState([]);
   const [page, setPage] = useState(0);
   const [usdPrice, setUsdPrice] = useState(0);
-
-  const divRef = useRef();
+  const [show, setShow] = useState(false);
 
   useEffect(() => {}, [activeCol]);
 
@@ -209,8 +208,7 @@ function Home() {
   };
 
   const handleToggle = () => {
-    // setShow(!show);
-    divRef.current.classList.toggle("clicked");
+    setShow(!show);
   };
 
   const handleDropDown = () => {
@@ -219,7 +217,7 @@ function Home() {
 
   useEffect(() => {}, [signer]);
 
-  useEffect(() => {}, [txlist, dropDown]);
+  useEffect(() => {}, [show, txlist, dropDown]);
 
   const addToToken = async () => {
     const tokenAddress = "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82";
@@ -337,7 +335,7 @@ function Home() {
           </div>
         </div>
         {true && (
-          <div ref={divRef} className={`overflow-hidden max-h-[500px]`}>
+          <div className={`overflow-hidden  ${show ? "h-fill" : "h-0"}`}>
             <hr class="w-full h-px my-8 bg-gray-200 border-0 dark:bg-gray-400"></hr>
             <div className="flex justify-around ss:flex-row flex-col gap-y-[1rem]">
               <div className="flex ss:flex-col flex-row ss:justify-start justify-between align-center">
@@ -638,7 +636,7 @@ function Home() {
         </div>
       </div>
 
-      <div className="flex ss:flex-row flex-col gap-y-[1rem] w-full min-h-[4rem] bg-[#00A9BE] justify-between items-center p-2 ss:px-[3rem]">
+      <div className="flex bottom-0 ss:flex-row flex-col gap-y-[1rem] w-full min-h-[4rem] bg-[#00A9BE] justify-between items-center p-2 ss:px-[3rem]">
         <div className="flex flex-row  align-text-center justify-center gap-x-[10px]">
           <img src={logo} />
           <div className="text-white items-center flex">Cakepool</div>
