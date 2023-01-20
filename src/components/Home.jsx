@@ -295,7 +295,7 @@ function Home() {
               </div>
             </div>
           </div>
-          <div className="flex ss:flex-row flex-col justify-around pl-[8rem] ss:w-[60%] w-full flex-wrap gap-y-[1.4rem] mt-[1.4rem] ss:mt-[0] ">
+          <div className="flex ss:flex-row flex-col justify-around ss:pl-[8rem] ss:w-[60%] w-full flex-wrap gap-y-[1.4rem] mt-[1.4rem] ss:mt-[0] ">
             <div className="flex flex-col ss:bg-transparent  ss:w-auto w-[98%]  ss:text-start text-center ">
               <div className="text-white ss:mb-[1rem] mb-[0.5rem] ss:text-[0.9rem] text-start px-[0.7rem] ss:leading-[1rem] text-[0.7rem] leading-[0.9rem] ">
                 Recent profit
@@ -573,7 +573,6 @@ function Home() {
                       : "text-gray-100/75"
                   } truncate text-center`}
                 >
-                  {/* {tx[options[activeCol].toLowerCase()]} */}
                   {tx[options[activeCol].toLowerCase()] === "" ||
                   tx[options[activeCol].toLowerCase()] === undefined ||
                   tx[options[activeCol].toLowerCase()] === null ? (
@@ -584,6 +583,25 @@ function Home() {
                       <Circle />
                       <PathCircle />
                     </svg>
+                  ) : options[activeCol] === "Action" ? (
+                    <div className="flex flex-row justify-center items-center">
+                      <div className="mr-[0.2rem] truncate max-w-[90%]">
+                        {tx[options[activeCol].toLowerCase()]}
+                      </div>
+                      <span
+                        className={`${
+                          tx[options[activeCol].toLowerCase()] === "deposit"
+                            ? "dot-green"
+                            : "dot-red"
+                        }`}
+                      ></span>
+                    </div>
+                  ) : options[activeCol] === "Amount" ? (
+                    <div className="flex flex-row justify-center items-center">
+                      <div className="mr-[0.6rem] truncate">
+                        {tx[options[activeCol].toLowerCase()]}
+                      </div>
+                    </div>
                   ) : (
                     tx[options[activeCol].toLowerCase()]
                   )}
@@ -660,6 +678,29 @@ function Home() {
                           <Circle />
                           <PathCircle />
                         </svg>
+                      ) : col === "Action" ? (
+                        <div className="flex flex-row justify-center items-center">
+                          <div className="mr-[0.6rem] truncate">
+                            {tx[col.toLowerCase()]}
+                          </div>
+                          <span
+                            className={`${
+                              tx[col.toLowerCase()] === "deposit"
+                                ? "dot-green"
+                                : "dot-red"
+                            }`}
+                          ></span>
+                        </div>
+                      ) : col === "Amount" ? (
+                        <div className="flex flex-row justify-end items-center">
+                          <div className="mr-[0.6rem] truncate">
+                            {tx[col.toLowerCase()]}
+                          </div>
+                          <img
+                            src={logo_top}
+                            className="h-[20px] w-[20px] mr-[0.5rem]"
+                          />
+                        </div>
                       ) : (
                         tx[col.toLowerCase()]
                       )}

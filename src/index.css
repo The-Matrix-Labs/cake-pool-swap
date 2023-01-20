@@ -76,6 +76,33 @@
   text-transform: uppercase;
 }
 
+.dot-red {
+  height: 7px;
+  width: 7px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-green {
+  height: 7px;
+  width: 7px;
+  background-color: #3aff42;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+  .dot-green {
+    height: 4px;
+    width: 4px;
+  }
+  .dot-red {
+    height: 4px;
+    width: 4px;
+  }
+}
+
 .font_base-m {
   font-family: "Monda";
   font-style: normal;
