@@ -9,7 +9,7 @@ import metamask from "./metamask.png";
 import bscScan from "./BscScan.webp";
 import close from "./close.svg";
 import menu from "./menu.svg";
-import arrowDown from "./arrowDown.png";
+import arrowDown from "./arrowDown.svg";
 import leftArrow from "./leftArrow.png";
 import rightArrow from "./rightArrow.png";
 import lock1 from "./lock1.svg";

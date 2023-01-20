@@ -329,9 +329,16 @@ function Home() {
             onClick={() => {
               handleToggle();
             }}
-            className="text-[#61ECFF] cursor-pointer ss:text-[1.5rem] text-[1.2rem] ss:leading-[1.6rem] leading-[1.4rem] ss:w-[20%] w-full ss:text-center text-end"
+            className="text-[#61ECFF]  cursor-pointer ss:text-[1.5rem] text-[1.2rem] ss:leading-[1.6rem] leading-[1.4rem] ss:w-[20%] w-full ss:text-center text-end"
           >
-            Hide
+            <div className="flex flex-row items-center ss:justify-center justify-end gap-x-[15px]">
+              Hide
+              <img
+                src={arrowDown}
+                alt=""
+                className={`w-[23px] h-[23px] object-contain cursor-pointer`}
+              />
+            </div>
           </div>
         </div>
         {true && (
@@ -390,7 +397,7 @@ function Home() {
                     <img
                       src={isLocked ? lock : unlock}
                       alt=""
-                      className="fill-green-400 h-[20px] w-[20px]"
+                      className="fill-green-400 h-[20px] w-[20px] cursor-pointer"
                     />
                     <div className="text-white text-[1rem] leading-[1.3rem]">
                       {isLocked ? "Locked" : "Unlocked"}
@@ -480,7 +487,7 @@ function Home() {
               <img
                 src={dropDown ? close : arrowDown}
                 alt="menu"
-                className={`w-[13px] h-[13px] object-contain`}
+                className={`w-[13px] h-[13px] object-contain curssor-pointer`}
                 onClick={() => setDropDown(!dropDown)}
               />
               <div
