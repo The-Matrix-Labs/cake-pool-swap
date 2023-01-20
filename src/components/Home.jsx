@@ -336,7 +336,7 @@ function Home() {
               <img
                 src={arrowDown}
                 alt=""
-                className={`w-[23px] h-[23px] object-contain cursor-pointer`}
+                className={`ss:w-[23px] ss:h-[23px] w-[13px] h-[13px] object-contain cursor-pointer`}
               />
             </div>
           </div>
