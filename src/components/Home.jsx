@@ -374,7 +374,7 @@ function Home() {
                 </div>
                 <div className="ss:w-full w-[50%]">
                   <div className="text-white font-bold ss:text-[2rem] text-[1.5rem] ss:leading-[1.7rem] leading-[1.3rem] mb-[10px]">
-                    <Number n={amountLocked} />
+                    {Math.floor(amountLocked * 1000) / 1000}
                   </div>
                   <div className="text-white items-center font-thin flex text-[0.8rem] leading-[0.9rem]">
                     {Math.floor(usdPrice * amountLocked * 1000) / 1000} USD
