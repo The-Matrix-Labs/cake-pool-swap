@@ -91,6 +91,22 @@ function Home() {
     priceFinder();
   }, [signer]);
 
+  const fetchData = () => {
+    console.log("lets see");
+    getPoolInfo();
+    getUserInfo();
+    priceFinder();
+  };
+
+  useEffect(() => {
+    const myInterval = setInterval(fetchData, 10000);
+
+    return () => {
+      // should clear the interval when the component unmounts
+      clearInterval(myInterval);
+    };
+  }, []);
+
   useEffect(() => {}, [usdPrice]);
 
   useEffect(() => {
@@ -311,14 +327,14 @@ function Home() {
             onClick={() => {
               handleToggle();
             }}
-            className="transition ease-in-out duration-550 text-[#61ECFF] cursor-pointer ss:text-[1.5rem] text-[1.2rem] ss:leading-[1.6rem] leading-[1.4rem] ss:w-[20%] w-full ss:text-center text-end"
+            className="text-[#61ECFF] cursor-pointer ss:text-[1.5rem] text-[1.2rem] ss:leading-[1.6rem] leading-[1.4rem] ss:w-[20%] w-full ss:text-center text-end"
           >
             Hide
           </div>
         </div>
         {true && (
           <div
-            className={`transition-all delay-150 duration-300 overflow-hidden transition ease-in-out duration-500 ${
+            className={`overflow-hidden max-h-[500px] ${
               show ? "h-fill" : "h-0"
             }`}
           >
@@ -541,14 +557,14 @@ function Home() {
         <div className="flex flex-row justify-end mt-[1rem]">
           <img
             src={leftArrow}
-            className={`h-[20px] w-[20px] ${
+            className={`h-[20px] w-[20px] cursor-pointer ${
               page === 0 ? "opacity-25" : "opacity-100"
             }`}
             onClick={handleChangeUp}
           />
           <img
             src={rightArrow}
-            className={`h-[20px] w-[20px] ${
+            className={`h-[20px] w-[20px] cursor-pointer ${
               page + 1 === pages.length ? "opacity-25" : "opacity-100"
             }`}
             onClick={handleChangeDown}
@@ -607,14 +623,14 @@ function Home() {
         <div className="flex flex-row justify-end mt-[1rem]">
           <img
             src={leftArrow}
-            className={`h-[30px] w-[30px] ${
+            className={`h-[30px] w-[30px] cursor-pointer ${
               page === 0 ? "opacity-25" : "opacity-100"
             }`}
             onClick={handleChangeDown}
           />
           <img
             src={rightArrow}
-            className={`h-[30px] w-[30px] ${
+            className={`h-[30px] w-[30px] cursor-pointer ${
               page + 1 === pages.length ? "opacity-25" : "opacity-100"
             }`}
             onClick={handleChangeUp}
