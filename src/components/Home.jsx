@@ -99,7 +99,7 @@ function Home() {
   };
 
   useEffect(() => {
-    const myInterval = setInterval(fetchData, 10000);
+    const myInterval = setInterval(fetchData, 2000);
 
     return () => {
       // should clear the interval when the component unmounts
