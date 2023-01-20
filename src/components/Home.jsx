@@ -295,35 +295,35 @@ function Home() {
               </div>
             </div>
           </div>
-          <div className="flex ss:flex-row justify-between ss:w-[60%] w-full flex-wrap gap-y-[10px] ">
-            <div className="flex  flex-col ss:bg-transparent  ss:w-auto w-[48%]  ss:text-start ">
-              <div className="text-white ss:mb-[1rem] mb-[0.5rem] ss:text-[0.9rem] px-[0.7rem] ss:leading-[1rem] text-[0.7rem] leading-[0.9rem] text-gray-100/50">
+          <div className="flex ss:flex-row flex-col justify-between ss:w-[60%] w-full flex-wrap gap-y-[1.4rem] mt-[1.4rem] ss:mt-[0] ">
+            <div className="flex flex-col ss:bg-transparent  ss:w-auto w-[98%]  ss:text-start text-center ">
+              <div className="text-white ss:mb-[1rem] mb-[0.5rem] ss:text-[0.9rem] text-start px-[0.7rem] ss:leading-[1rem] text-[0.7rem] leading-[0.9rem] text-gray-100/50">
                 Recent profit
               </div>
               <div className="flex flex-col ss:bg-transparent bg-[#027785] ss:py-0 p-[0.7rem] rounded-md align-text-center justify-center gap-y-[1px]">
                 <div className="text-white text-[1rem] leading-[1.2rem] font-thick">
                   {Math.floor(amountProfited * 100000) / 100000}
                 </div>
-                <div className="ss:text-white text-gray-200/50 items-center ss:justify-start font-thin flex text-[0.8rem] leading-[0.9rem] w-full">
+                <div className="ss:text-white text-gray-200/50 items-center ss:justify-start justify-center font-thin flex text-[0.8rem] leading-[0.9rem] w-full">
                   Stake CAKE
                 </div>
               </div>
             </div>
-            <div className="flex  flex-col  ss:bg-transparent  ss:w-auto w-[48%]  ss:text-start ">
-              <div className="text-white ss:mb-[1rem] mb-[0.5rem] ss:text-[0.9rem] px-[0.7rem] ss:leading-[1rem] text-[0.7rem] leading-[0.9rem] text-gray-100/50">
+            <div className="flex  flex-col  ss:bg-transparent  ss:w-auto w-[98%]  ss:text-start text-center">
+              <div className="text-white ss:mb-[1rem] mb-[0.5rem] ss:text-[0.9rem] text-start px-[0.7rem] ss:leading-[1rem] text-[0.7rem] leading-[0.9rem] text-gray-100/50">
                 Locked
               </div>
               <div className="flex flex-col ss:bg-transparent bg-[#027785] ss:py-0 p-[0.7rem] rounded-md align-text-center justify-center gap-y-[1px]">
                 <div className="text-white text-[1rem] leading-[1.2rem] font-thick">
                   {amountLocked}
                 </div>
-                <div className="ss:text-white text-gray-200/50 items-center ss:justify-start font-thin flex text-[0.8rem] leading-[0.9rem] w-full">
+                <div className="ss:text-white text-gray-200/50 items-center ss:justify-start justify-center font-thin flex text-[0.8rem] leading-[0.9rem] w-full">
                   {Math.floor(usdPrice * amountLocked * 1000) / 1000} USD
                 </div>
               </div>
             </div>
 
-            <div className="flex  flex-col  ss:w-auto w-[48%]  ss:text-start ">
+            {/* <div className="flex  flex-col  ss:w-auto w-[48%]  ss:text-start ">
               <div className="text-white ss:mb-[1rem] mb-[0.5rem] ss:text-[0.9rem] px-[0.7rem] ss:leading-[1rem] text-[0.7rem] leading-[0.9rem] text-gray-100/50">
                 APR
               </div>
@@ -332,16 +332,16 @@ function Home() {
                   <NumberFloat n={48.32} />%
                 </div>
               </div>
-            </div>
-            <div className="flex  flex-col ss:bg-transparent  ss:w-auto w-[48%]  ss:text-start ">
-              <div className="text-white ss:mb-[1rem] mb-[0.5rem] ss:text-[0.9rem] px-[0.7rem] ss:leading-[1rem] text-[0.7rem] leading-[0.9rem] text-gray-100/50">
+            </div> */}
+            <div className="flex  flex-col ss:bg-transparent  ss:w-auto w-[98%]  ss:text-start text-center">
+              <div className="text-white ss:mb-[1rem] mb-[0.5rem] text-start ss:text-[0.9rem] px-[0.7rem] ss:leading-[1rem] text-[0.7rem] leading-[0.9rem] text-gray-100/50">
                 Total Staked
               </div>
               <div className="flex flex-col ss:bg-transparent bg-[#027785] ss:py-0 p-[0.7rem] rounded-md align-text-center justify-center gap-y-[1px]">
                 <div className="text-white text-[1rem] leading-[1.2rem] font-thick">
                   <Number n={totalStaked} />
                 </div>
-                <div className="ss:text-white text-gray-200/50 items-center ss:justify-start font-thin flex text-[0.8rem] leading-[0.9rem] w-full">
+                <div className="ss:text-white text-gray-200/50 items-center ss:justify-start justify-center font-thin flex text-[0.8rem] leading-[0.9rem] w-full">
                   CAKE
                 </div>
               </div>
