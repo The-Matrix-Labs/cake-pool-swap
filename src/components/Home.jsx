@@ -692,7 +692,7 @@ function Home() {
                           ></span>
                         </div>
                       ) : col === "Amount" ? (
-                        <div className="flex flex-row justify-end items-center">
+                        <div className="flex flex-row justify-center items-center">
                           <div className="mr-[0.6rem] truncate">
                             {tx[col.toLowerCase()]}
                           </div>
