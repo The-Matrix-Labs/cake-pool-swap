@@ -560,14 +560,14 @@ function Home() {
             className={`h-[20px] w-[20px] cursor-pointer ${
               page === 0 ? "opacity-25" : "opacity-100"
             }`}
-            onClick={handleChangeUp}
+            onClick={handleChangeDown}
           />
           <img
             src={rightArrow}
             className={`h-[20px] w-[20px] cursor-pointer ${
               page + 1 === pages.length ? "opacity-25" : "opacity-100"
             }`}
-            onClick={handleChangeDown}
+            onClick={handleChangeUp}
           />
         </div>
       </div>
