@@ -33,6 +33,29 @@ import {
 
 import { Number, NumberFloat } from "./Number";
 
+function Circle() {
+  return (
+    <circle
+      class="opacity-25"
+      cx="12"
+      cy="12"
+      r="10"
+      stroke="currentColor"
+      stroke-width="4"
+    ></circle>
+  );
+}
+
+function PathCircle() {
+  return (
+    <path
+      class="opacity-75"
+      fill="currentColor"
+      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+    ></path>
+  );
+}
+
 function Home() {
   const [totalStaked, setTotalStaked] = useState(0);
   const [totalLocked, setTotalLocked] = useState(0);
@@ -550,7 +573,20 @@ function Home() {
                       : "text-gray-100/75"
                   } truncate text-center`}
                 >
-                  {tx[options[activeCol].toLowerCase()]}
+                  {/* {tx[options[activeCol].toLowerCase()]} */}
+                  {tx[options[activeCol].toLowerCase()] === "" ||
+                  tx[options[activeCol].toLowerCase()] === undefined ||
+                  tx[options[activeCol].toLowerCase()] === null ? (
+                    <svg
+                      class="animate-spin h-5 w-5 mr-3 items-center text-[#61ECFF]/75 ml-[3rem]"
+                      viewBox="0 0 24 24"
+                    >
+                      <Circle />
+                      <PathCircle />
+                    </svg>
+                  ) : (
+                    tx[options[activeCol].toLowerCase()]
+                  )}
                 </div>
               </div>
               {index !== txlist.length - 1 && (
@@ -614,7 +650,19 @@ function Home() {
                         }
                       }}
                     >
-                      {tx[col.toLowerCase()]}
+                      {tx[col.toLowerCase()] === "" ||
+                      tx[col.toLowerCase()] === undefined ||
+                      tx[col.toLowerCase()] === null ? (
+                        <svg
+                          class="animate-spin h-5 w-5 mr-3 items-center text-[#61ECFF]/75 ml-[3rem]"
+                          viewBox="0 0 24 24"
+                        >
+                          <Circle />
+                          <PathCircle />
+                        </svg>
+                      ) : (
+                        tx[col.toLowerCase()]
+                      )}
                     </div>
                   );
                 })}
