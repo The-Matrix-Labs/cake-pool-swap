@@ -31,6 +31,8 @@ import {
   searchPairsMatchingQuery,
 } from "dexscreener-api";
 
+import { Number, NumberFloat } from "./Number";
+
 function Home() {
   const [totalStaked, setTotalStaked] = useState(0);
   const [totalLocked, setTotalLocked] = useState(0);
@@ -43,7 +45,7 @@ function Home() {
   const [avgLockDuration, setAvgLockDuration] = useState();
   const { data: signer, isError, isLoading } = useSigner();
   const provider = useProvider();
-  const [show, setShow] = useState(true);
+  // const [show, setShow] = useState(true);
   const [colList, setColList] = useState([
     "Hash",
     "Account",
@@ -66,6 +68,8 @@ function Home() {
   const [pages, setPages] = useState([]);
   const [page, setPage] = useState(0);
   const [usdPrice, setUsdPrice] = useState(0);
+
+  const divRef = useRef();
 
   useEffect(() => {}, [activeCol]);
 
@@ -92,7 +96,6 @@ function Home() {
   }, [signer]);
 
   const fetchData = () => {
-    console.log("lets see");
     getPoolInfo();
     getUserInfo();
     priceFinder();
@@ -183,7 +186,7 @@ function Home() {
       provider_
     );
     console.log(token_temp);
-    var userinfo = await stake_temp.userInfo(signer.getAddress());
+    var userinfo = await stake_temp.userInfo(signer?.getAddress());
     var startTime = parseInt(userinfo.lockStartTime);
     var endTime = parseInt(userinfo.lockEndTime);
     var duration = (endTime - startTime) / 86400;
@@ -206,7 +209,8 @@ function Home() {
   };
 
   const handleToggle = () => {
-    setShow(!show);
+    // setShow(!show);
+    divRef.current.classList.toggle("clicked");
   };
 
   const handleDropDown = () => {
@@ -215,7 +219,7 @@ function Home() {
 
   useEffect(() => {}, [signer]);
 
-  useEffect(() => {}, [show, txlist, dropDown]);
+  useEffect(() => {}, [txlist, dropDown]);
 
   const addToToken = async () => {
     const tokenAddress = "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82";
@@ -303,8 +307,8 @@ function Home() {
                 APR
               </div>
               <div className="flex flex-col ss:bg-transparent bg-[#027785] ss:py-0 p-[0.7rem] rounded-md align-text-center justify-center gap-y-[1px] h-full">
-                <div className="text-white text-[1rem] leading-[1.2rem] font-thick ">
-                  48.32%
+                <div className="text-white text-[1rem] leading-[1.2rem] font-thick  flex flex-row">
+                  <NumberFloat n={48.32} />%
                 </div>
               </div>
             </div>
@@ -314,7 +318,7 @@ function Home() {
               </div>
               <div className="flex flex-col ss:bg-transparent bg-[#027785] ss:py-0 p-[0.7rem] rounded-md align-text-center justify-center gap-y-[1px]">
                 <div className="text-white text-[1rem] leading-[1.2rem] font-thick">
-                  {totalStaked}
+                  <Number n={totalStaked} />
                 </div>
                 <div className="ss:text-white text-gray-200/50 items-center ss:justify-start font-thin flex text-[0.8rem] leading-[0.9rem] w-full">
                   CAKE
@@ -333,11 +337,7 @@ function Home() {
           </div>
         </div>
         {true && (
-          <div
-            className={`overflow-hidden max-h-[500px] ${
-              show ? "h-fill" : "h-0"
-            }`}
-          >
+          <div ref={divRef} className={`overflow-hidden max-h-[500px]`}>
             <hr class="w-full h-px my-8 bg-gray-200 border-0 dark:bg-gray-400"></hr>
             <div className="flex justify-around ss:flex-row flex-col gap-y-[1rem]">
               <div className="flex ss:flex-col flex-row ss:justify-start justify-between align-center">
@@ -346,7 +346,7 @@ function Home() {
                 </div>
                 <div className="ss:w-full w-[50%]">
                   <div className="text-white font-bold ss:text-[2rem] text-[1.5rem] ss:leading-[1.7rem] leading-[1.3rem] mb-[10px]">
-                    {amountLocked}
+                    <Number n={amountLocked} />
                   </div>
                   <div className="text-white items-center font-thin flex text-[0.8rem] leading-[0.9rem]">
                     {Math.floor(usdPrice * amountLocked * 1000) / 1000} USD
@@ -372,8 +372,8 @@ function Home() {
                   Yield boost
                 </div>
                 <div className="ss:w-full w-[50%]">
-                  <div className="text-white font-bold ss:text-[2rem] text-[1.5rem] ss:leading-[1.7rem] leading-[1.3rem] mb-[10px]">
-                    {boostYield}x
+                  <div className="text-white font-bold ss:text-[2rem] text-[1.5rem] ss:leading-[1.7rem] leading-[1.3rem] mb-[10px] flex flex-row">
+                    <NumberFloat n={boostYield} /> x
                   </div>
                   <div className="text-white items-center font-thin flex text-[0.8rem] leading-[0.9rem]">
                     Lock for {lockDuration / 7} weeks
@@ -403,16 +403,16 @@ function Home() {
                   <div className="text-gray-200/50 text-[1rem] leading-[1.3rem] mr-[5px]">
                     Total locked:
                   </div>
-                  <div className="text-gray-200/50 text-[1rem] leading-[1.3rem] ">
-                    {totalLocked} CAKE
+                  <div className="text-gray-200/50 text-[1rem] leading-[1.3rem] flex flex-row gap-x-[5px]">
+                    <Number n={totalLocked} /> CAKE
                   </div>
                 </div>
                 <div className="flex flex-row">
                   <div className="text-gray-200/50 text-[0.7rem] leading-[0.9rem] mr-[5px]">
                     Average lock duration:
                   </div>
-                  <div className="text-gray-200/50 text-[0.7rem] leading-[0.9rem] ">
-                    {Math.floor(avgLockDuration)} weeks
+                  <div className="text-gray-200/50 text-[0.7rem] leading-[0.9rem] flex flex-row gap-x-[5px] ">
+                    <Number n={Math.floor(avgLockDuration) || 0} /> weeks
                   </div>
                 </div>
               </div>
