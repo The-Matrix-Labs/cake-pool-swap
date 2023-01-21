@@ -680,7 +680,7 @@ function Home() {
                         </svg>
                       ) : col === "Action" ? (
                         <div className="flex flex-row justify-center items-center">
-                          <div className="mr-[0.6rem] truncate">
+                          <div className="mr-[0.4rem] truncate">
                             {tx[col.toLowerCase()]}
                           </div>
                           <span

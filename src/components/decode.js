@@ -142,7 +142,7 @@ const getLockTime = (logs, method) => {
   }
 
   console.log(total);
-  return total;
+  return total || 0;
 };
 
 export const decoder = async (tx) => {
@@ -153,6 +153,6 @@ export const decoder = async (tx) => {
   // console.log(recipt.logs, tx);
 
   var lockTime = getLockTime(recipt.logs, tx.action);
-  return { amount: amount, lockTime: lockTime };
+  return { amount: amount || 0, lockTime: lockTime };
   //   console.log(recipt);
 };
