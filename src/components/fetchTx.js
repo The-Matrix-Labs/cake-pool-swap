@@ -5,7 +5,7 @@ import Values from "../contract/values.json";
 import { decoder } from "./decode";
 
 const url =
-  "https://api.bscscan.com/api?module=account&action=txlist&address=0x45c54210128a065de780C4B0Df3d16664f7f859e&startblock=0&endblock=99999999&page=1&offset=30&sort=desc&apikey=22WN293I44ACISW4Y5ZFZ5RMPZMVBXK3QM";
+  "https://api.bscscan.com/api?module=account&action=txlist&address=0x45c54210128a065de780C4B0Df3d16664f7f859e&startblock=0&endblock=99999999&page=1&offset=50&sort=desc&apikey=22WN293I44ACISW4Y5ZFZ5RMPZMVBXK3QM";
 
 export const fetchTx = async () => {
   let rpcUrl = Values.rpcURl;
