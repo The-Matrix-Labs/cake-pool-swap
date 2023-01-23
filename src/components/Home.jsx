@@ -275,7 +275,7 @@ function Home() {
     endTime = new Date(endTime * 1000);
     console.log(amount + 1);
     setUnlockTime(endTime.toDateString() + " " + endTime.toLocaleTimeString());
-    setIsLocked(userinfo.locked);
+    setIsLocked(duration < 0 ? false : true);
     setAmountLocked(amount);
     var temp_yield =
       Math.floor(((amount + boostedAmount) * 100) / amount) / 100;
