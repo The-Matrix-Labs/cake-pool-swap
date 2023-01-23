@@ -34,6 +34,7 @@ export const fetchTx = async () => {
             hash: data.hash,
             action: data.functionName.split("(")[0],
             time: data.timeStamp,
+            decoded: false,
           };
           txList.push(temp);
           if (txList.length === 10) {
@@ -48,19 +49,19 @@ export const fetchTx = async () => {
   } catch (error) {}
   // console.log(txList);
 
-  const fn = async () => {
-    pages.forEach((page) => {
-      page.forEach(async (tx) => {
-        var res = await decoder(tx);
-        tx.amount = Math.floor(res.amount * 100) / 100 || 0;
-        tx.locktime = res.lockTime || 0;
-      });
-    });
-  };
+  // const fn = async () => {
+  //   pages.forEach((page) => {
+  //     page.forEach(async (tx) => {
+  //       var res = await decoder(tx);
+  //       tx.amount = Math.floor(res.amount * 100) / 100 || 0;
+  //       tx.locktime = res.lockTime || 0;
+  //     });
+  //   });
+  // };
 
-  try {
-    await fn();
-  } catch (error) {}
+  // try {
+  //   await fn();
+  // } catch (error) {}
 
   return pages || [[]];
 };

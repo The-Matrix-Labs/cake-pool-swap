@@ -123,6 +123,14 @@ function Home() {
     priceFinder();
   };
 
+  const fetchPages = async () => {
+    if (page === 0) {
+      var temp = await fetchTx();
+      console.log(temp);
+      setPages(temp);
+    }
+  };
+
   useEffect(() => {
     const myInterval = setInterval(fetchData, 2000);
 
@@ -132,14 +140,48 @@ function Home() {
     };
   }, []);
 
+  useEffect(() => {
+    const myInterval = setInterval(fetchPages, 20000);
+
+    return () => {
+      // should clear the interval when the component unmounts
+      clearInterval(myInterval);
+    };
+  }, [pages]);
+
   useEffect(() => {}, [usdPrice]);
+
+  const handleTxDecode = async () => {
+    if (pages.length <= page) return;
+    let temp = await Promise.all(
+      pages[page].map(async (tx) => {
+        if (tx.decoded) return tx;
+        var res = await decoder(tx);
+
+        return {
+          ...tx,
+          amount: Math.floor(res.amount * 100) / 100 || 0,
+          locktime: res.lockTime || 0,
+          decoded: true,
+        };
+      })
+    );
+    setTxList(temp);
+  };
 
   useEffect(() => {
     const fn = async () => {
       var temp = await fetchTx();
       setPages(temp);
+
+      temp[page].forEach(async (tx) => {
+        if (tx.decoded) return;
+        var res = await decoder(tx);
+        tx.amount = Math.floor(res.amount * 100) / 100 || 0;
+        tx.locktime = res.lockTime || 0;
+        tx.decoded = true;
+      });
       setTxList(temp[page]);
-      console.log(temp);
       // temp.forEach((tx) => {
       //   txlist.push(tx);
       // });
@@ -147,7 +189,7 @@ function Home() {
     fn();
   }, []);
 
-  const handleChangeUp = () => {
+  const handleChangeUp = async () => {
     console.log("up");
     if (pages.length > page + 1) {
       var temp = page + 1;
@@ -164,6 +206,8 @@ function Home() {
     }
   };
 
+  useEffect(() => {}, [pages]);
+
   useEffect(() => {
     const fn = async () => {
       await priceFinder();
@@ -171,7 +215,13 @@ function Home() {
     fn();
   });
 
-  useEffect(() => {}, [txlist, page]);
+  useEffect(() => {
+    handleTxDecode();
+  }, [page, pages]);
+
+  useEffect(() => {
+    console.log(txlist);
+  }, [txlist]);
 
   const getPoolInfo = async () => {
     let rpcUrl = Values.rpcURl;
@@ -225,9 +275,15 @@ function Home() {
     setAmountLocked(amount);
     var temp_yield =
       Math.floor(((amount + boostedAmount) * 100) / amount) / 100;
-    console.log(temp_yield);
+
+    var recent_profit =
+      (boostedAmount *
+        (Math.min(new Date().getTime() / 1000, userinfo.lockEndTime) -
+          userinfo.lockStartTime)) /
+      (userinfo.lockEndTime - userinfo.lockStartTime);
+    console.log(amount + boostedAmount);
     setBoostYield(temp_yield);
-    setAmountProfited(boostedAmount);
+    setAmountProfited(recent_profit.toFixed(7));
   };
 
   const handleToggle = () => {
