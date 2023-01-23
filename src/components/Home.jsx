@@ -76,6 +76,7 @@ function Home() {
     "Time",
     "Amount",
     "LockTime",
+    "USD",
   ]);
   const [activeCol, setActiveCol] = useState(0);
   const [colListSmall, setColListSmall] = useState(["Hash", "Account"]);
@@ -86,6 +87,7 @@ function Home() {
     "Time",
     "Amount",
     "LockTime",
+    "USD",
   ]);
   const [txlist, setTxList] = useState([]);
   const [pages, setPages] = useState([]);
@@ -163,6 +165,7 @@ function Home() {
           amount: Math.floor(res.amount * 100) / 100 || 0,
           locktime: res.lockTime || 0,
           decoded: true,
+          usd: Math.floor(res.amount * usdPrice * 100) / 100 || 0,
         };
       })
     );
@@ -180,6 +183,7 @@ function Home() {
         tx.amount = Math.floor(res.amount * 100) / 100 || 0;
         tx.locktime = res.lockTime || 0;
         tx.decoded = true;
+        tx.usd = Math.floor(res.amount * usdPrice * 100) / 100 || 0;
       });
       setTxList(temp[page]);
       // temp.forEach((tx) => {
@@ -261,12 +265,12 @@ function Home() {
     var userinfo = await stake_temp.userInfo(signer?.getAddress());
     var startTime = parseInt(userinfo.lockStartTime);
     var endTime = parseInt(userinfo.lockEndTime);
-    var duration = (endTime - startTime) / 86400;
+    var duration = Math.max(endTime - new Date().getTime() / 1000, 0);
     var boostedAmount = parseFloat(
       ethers.utils.formatEther(userinfo.userBoostedShare)
     );
     var amount = parseFloat(ethers.utils.formatEther(userinfo.lockedAmount));
-    setLockDuration(duration);
+    setLockDuration(Math.floor(duration / 86400));
 
     endTime = new Date(endTime * 1000);
     console.log(amount + 1);
