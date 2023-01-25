@@ -111,7 +111,7 @@ function Home() {
     const val = searchResponse.pairs?.find(
       (data) => data.dexId === "pancakeswap"
     );
-    console.log(val.priceUsd);
+    // console.log(val.priceUsd);
     setUsdPrice(val.priceUsd || 0);
   };
 
@@ -130,7 +130,7 @@ function Home() {
   const fetchPages = async () => {
     if (page === 0) {
       var temp = await fetchTx();
-      console.log(temp);
+      // console.log(temp);
       setPages(temp);
     }
   };
@@ -196,7 +196,7 @@ function Home() {
   }, []);
 
   const handleChangeUp = async () => {
-    console.log("up");
+    // console.log("up");
     if (pages.length > page + 1) {
       var temp = page + 1;
       setPage(temp);
@@ -216,7 +216,7 @@ function Home() {
 
   const handleCustomChange = (event) => {
     event.preventDefault();
-    console.log("here it comes");
+    // console.log("here it comes");
     var val = parseInt(event.target.value);
     if (val === "") {
       setPage(0);
@@ -224,7 +224,7 @@ function Home() {
     }
     if (parseInt(val) < pages.length) {
       setPage(val - 1);
-      console.log(val, "8888888888888888888888888888");
+      // console.log(val, "8888888888888888888888888888");
       setPageNumber(val);
       setTxList(pages[val]);
     }
@@ -241,11 +241,11 @@ function Home() {
 
   useEffect(() => {
     handleTxDecode();
-    console.log(page);
+    // console.log(page);
   }, [page, pages, pageNumber]);
 
   useEffect(() => {
-    console.log(txlist);
+    // console.log(txlist);
   }, [txlist]);
 
   const getPoolInfo = async () => {
@@ -262,7 +262,7 @@ function Home() {
     var maxDuration = parseInt(await stake_temp.MAX_LOCK_DURATION());
     var minDuration = parseInt(await stake_temp.MIN_LOCK_DURATION());
 
-    console.log(maxDuration, minDuration);
+    // console.log(maxDuration, minDuration);
 
     setAvgLockDuration((maxDuration - minDuration) / 2 / 86400 / 7);
     setTotalStaked(Math.floor(available));
@@ -282,7 +282,7 @@ function Home() {
       tokenAbi,
       provider_
     );
-    console.log(token_temp);
+    // console.log(token_temp);
     var userinfo = await stake_temp.userInfo(signer?.getAddress());
     var startTime = parseInt(userinfo.lockStartTime);
     var endTime = parseInt(userinfo.lockEndTime);
@@ -294,7 +294,7 @@ function Home() {
     setLockDuration(Math.floor(duration / 86400));
 
     endTime = new Date(endTime * 1000);
-    console.log(amount + 1);
+    // console.log(amount + 1);
     setUnlockTime(endTime.toDateString() + " " + endTime.toLocaleTimeString());
     setIsLocked(duration <= 0 ? false : true);
     setAmountLocked(amount);
@@ -306,7 +306,7 @@ function Home() {
         (Math.min(new Date().getTime() / 1000, userinfo.lockEndTime) -
           userinfo.lockStartTime)) /
       (userinfo.lockEndTime - userinfo.lockStartTime);
-    console.log(amount + boostedAmount);
+    // console.log(amount + boostedAmount);
     setBoostYield(temp_yield);
     setAmountProfited(recent_profit.toFixed(7));
   };
@@ -809,7 +809,7 @@ function Home() {
             placeholder="."
             type="number"
             onChange={(event) => {
-              console.log(pages[Math.max(parseInt(event.target.value) - 1, 0)]);
+              // console.log(pages[Math.max(parseInt(event.target.value) - 1, 0)]);
               setPageNumber(event.target.value.toString());
               if (event.target.value !== "") {
                 setPage(Math.max(parseInt(event.target.value) - 1, 0));
