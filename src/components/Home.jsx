@@ -18,6 +18,7 @@ import {
   lock1,
   logo_top,
   unlock,
+  new_arrow,
 } from "../assets";
 import { useSigner, useProvider } from "wagmi";
 import { ethers } from "ethers";
@@ -695,14 +696,14 @@ function Home() {
         })}
         <div className="flex flex-row justify-end mt-[1rem]">
           <img
-            src={leftArrow}
-            className={`h-[20px] w-[20px] cursor-pointer ${
+            src={new_arrow}
+            className={`h-[20px] w-[20px] rotate-180 cursor-pointer ${
               page === 0 ? "opacity-25" : "opacity-100"
             }`}
             onClick={handleChangeDown}
           />
           <img
-            src={rightArrow}
+            src={new_arrow}
             className={`h-[20px] w-[20px] cursor-pointer ${
               page + 1 === pages.length ? "opacity-25" : "opacity-100"
             }`}
@@ -796,8 +797,8 @@ function Home() {
         })}
         <div className="flex flex-row justify-center mt-[1rem] items-center">
           <img
-            src={leftArrow}
-            className={`h-[30px] w-[30px] cursor-pointer ${
+            src={new_arrow}
+            className={`h-[30px] w-[30px] rotate-180 cursor-pointer ${
               page === 0 ? "opacity-25" : "opacity-100"
             }`}
             onClick={handleChangeDown}
@@ -818,7 +819,7 @@ function Home() {
           />{" "}
           <span className="text-white">. . . 100</span>
           <img
-            src={rightArrow}
+            src={new_arrow}
             className={`h-[30px] w-[30px] cursor-pointer ${
               page + 1 === pages.length ? "opacity-25" : "opacity-100"
             }`}

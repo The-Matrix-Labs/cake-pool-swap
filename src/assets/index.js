@@ -15,6 +15,7 @@ import rightArrow from "./rightArrow.png";
 import lock1 from "./lock1.svg";
 import logo_top from "./logo_top.png";
 import unlock from "./unlock.svg";
+import new_arrow from "./new_arrow.svg";
 
 export {
   logo,
@@ -34,4 +35,5 @@ export {
   lock1,
   logo_top,
   unlock,
+  new_arrow
 };
