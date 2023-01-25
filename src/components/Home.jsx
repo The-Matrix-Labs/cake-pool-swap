@@ -377,7 +377,7 @@ function Home() {
             </div>
           </div>
           <div className="flex ss:flex-row flex-col justify-around ss:pl-[8rem] ss:w-[60%] w-full flex-wrap gap-y-[1.4rem] mt-[1.4rem] ss:mt-[0] ">
-            <div className="flex flex-col ss:bg-transparent  ss:w-auto w-[98%]  ss:text-start text-center ">
+            {/* <div className="flex flex-col ss:bg-transparent  ss:w-auto w-[98%]  ss:text-start text-center ">
               <div className="text-white ss:mb-[1rem] mb-[0.5rem] ss:text-[0.9rem] text-start px-[0.7rem] ss:leading-[1rem] text-[0.7rem] leading-[0.9rem] ">
                 Recent profit
               </div>
@@ -389,7 +389,7 @@ function Home() {
                   Stake CAKE
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="flex  flex-col  ss:bg-transparent  ss:w-auto w-[98%]  ss:text-start text-center">
               <div className="text-white ss:mb-[1rem] mb-[0.5rem] ss:text-[0.9rem] text-start px-[0.7rem] ss:leading-[1rem] text-[0.7rem] leading-[0.9rem] ">
                 Locked
