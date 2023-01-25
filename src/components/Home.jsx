@@ -76,8 +76,8 @@ function Home() {
     "Action",
     "Time",
     "Amount",
-    "LockTime",
     "USD",
+    "LockTime",
   ]);
   const [activeCol, setActiveCol] = useState(0);
   const [colListSmall, setColListSmall] = useState(["Hash", "Account"]);
@@ -87,8 +87,8 @@ function Home() {
     "Action",
     "Time",
     "Amount",
-    "LockTime",
     "USD",
+    "LockTime",
   ]);
   const [txlist, setTxList] = useState([]);
   const [pages, setPages] = useState([]);
@@ -361,7 +361,7 @@ function Home() {
           <img src={logo} />
           <div className="text-white items-center flex">Cakepool</div>
         </div>
-        {!signer && <ConnectButton />}
+        {<ConnectButton />}
       </div>
       <div className="flex bg-[#035D68] rounded-xl p-6 px-[2rem] md:mx-[9rem] md:my-[5rem] ss:mx-[2rem]  my-[1rem] mx-[10px] justify-around flex-col ">
         <div className="flex w-full justify-between ss:flex-row flex-col gap-y-[0.3rem]">
@@ -717,9 +717,17 @@ function Home() {
           {colList.map((col) => {
             return (
               <div
-                className={`text-white w-1/6 font-bold ss:text-[0.8rem] text-center ss:leading-[1rem] text-[1rem] leading-[1.2rem]`}
+                className={`text-white w-1/6 font-bold ss:text-[0.8rem] text-center ss:leading-[1rem] text-[1rem] leading-[1.2rem] flex flex-row items-center justify-center`}
               >
                 {col}
+                {col === "Amount" ? (
+                  <img
+                    src={logo_top}
+                    className="h-[20px] w-[20px] ml-[0.5rem]"
+                  />
+                ) : (
+                  <></>
+                )}
               </div>
             );
           })}
@@ -777,10 +785,6 @@ function Home() {
                           <div className="mr-[0.6rem] truncate">
                             {tx[col.toLowerCase()]}
                           </div>
-                          <img
-                            src={logo_top}
-                            className="h-[20px] w-[20px] mr-[0.5rem]"
-                          />
                         </div>
                       ) : (
                         tx[col.toLowerCase()]

@@ -27,7 +27,7 @@ const wagmiClient = createClient({
 
 const App = () => (
   <WagmiConfig client={wagmiClient}>
-    <RainbowKitProvider chains={chains}>
+    <RainbowKitProvider modalSize="compact" chains={chains}>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />

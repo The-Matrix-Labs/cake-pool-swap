@@ -186,3 +186,15 @@ mark {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+@media (max-width: 767px) {
+  .ju367v71 {
+    visibility: hidden;
+    width: 0;
+  }
+}
+
+.ju367v1n {
+  margin-top: 10px;
+  height: 100%;
+}
