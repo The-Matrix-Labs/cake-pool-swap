@@ -92,6 +92,7 @@ function Home() {
   const [txlist, setTxList] = useState([]);
   const [pages, setPages] = useState([]);
   const [page, setPage] = useState(0);
+  const [pageNumber, setPageNumber] = useState(1);
   const [usdPrice, setUsdPrice] = useState(0);
   const [show, setShow] = useState(true);
 
@@ -198,6 +199,7 @@ function Home() {
     if (pages.length > page + 1) {
       var temp = page + 1;
       setPage(temp);
+      setPageNumber(temp + 1);
       setTxList(pages[temp]);
     }
   };
@@ -206,7 +208,24 @@ function Home() {
     if (page > 0) {
       var temp = page - 1;
       setPage(temp);
+      setPageNumber(temp + 1);
       setTxList(pages[temp]);
+    }
+  };
+
+  const handleCustomChange = (event) => {
+    event.preventDefault();
+    console.log("here it comes");
+    var val = parseInt(event.target.value);
+    if (val === "") {
+      setPage(0);
+      setPageNumber(null);
+    }
+    if (parseInt(val) < pages.length) {
+      setPage(val - 1);
+      console.log(val, "8888888888888888888888888888");
+      setPageNumber(val);
+      setTxList(pages[val]);
     }
   };
 
@@ -221,7 +240,8 @@ function Home() {
 
   useEffect(() => {
     handleTxDecode();
-  }, [page, pages]);
+    console.log(page);
+  }, [page, pages, pageNumber]);
 
   useEffect(() => {
     console.log(txlist);
@@ -774,7 +794,7 @@ function Home() {
             </div>
           );
         })}
-        <div className="flex flex-row justify-end mt-[1rem]">
+        <div className="flex flex-row justify-center mt-[1rem] items-center">
           <img
             src={leftArrow}
             className={`h-[30px] w-[30px] cursor-pointer ${
@@ -782,6 +802,21 @@ function Home() {
             }`}
             onClick={handleChangeDown}
           />
+          <input
+            className="w-[40px] h-[40px] rounded-md mx-[8px] text-center p-0"
+            value={pageNumber}
+            placeholder="."
+            type="number"
+            onChange={(event) => {
+              console.log(pages[Math.max(parseInt(event.target.value) - 1, 0)]);
+              setPageNumber(event.target.value.toString());
+              if (event.target.value !== "") {
+                setPage(Math.max(parseInt(event.target.value) - 1, 0));
+                setTxList(pages[Math.max(parseInt(event.target.value) - 1, 0)]);
+              }
+            }}
+          />{" "}
+          <span className="text-white">. . . 100</span>
           <img
             src={rightArrow}
             className={`h-[30px] w-[30px] cursor-pointer ${

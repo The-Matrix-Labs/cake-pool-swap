@@ -147,7 +147,10 @@ const getLockTime = (logs, method) => {
 
 export const decoder = async (tx) => {
   let provider_ = new ethers.providers.JsonRpcProvider(rpcurl);
-  const recipt = await provider_.getTransactionReceipt(tx.hash);
+  let recipt;
+  try{
+  recipt = await provider_.getTransactionReceipt(tx.hash);
+  }catch(err){}
   // console.log(tx.account);
   var amount = getAmount(recipt.logs, tx.action, tx.account);
   // console.log(recipt.logs, tx);
