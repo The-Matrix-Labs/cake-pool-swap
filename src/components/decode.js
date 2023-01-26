@@ -135,7 +135,7 @@ const getLockTime = (logs, method) => {
   }
   if (weeks) {
     if (weeks === 1) {
-      total += weeks + " week";
+      total += weeks + " week ";
     } else {
       total += weeks + " weeks ";
     }
