@@ -123,11 +123,10 @@ const getLockTime = (logs, method) => {
   let weeks = 0;
   let days = 0;
   let years = 0;
-  years = Math.floor(a / 365);
-  if (a % 365) {
-    weeks = Math.floor((a % 365) / 7);
-    if ((a % 365) % 7) {
-      days = Math.floor((a % 365) % 7);
+  if (a) {
+    weeks = Math.floor(a / 7);
+    if (a % 7) {
+      days = Math.floor(a % 7);
     }
   }
   let total = "";
@@ -135,10 +134,18 @@ const getLockTime = (logs, method) => {
     total += years + " years ";
   }
   if (weeks) {
-    total += weeks + " weeks ";
+    if (weeks === 1) {
+      total += weeks + " week";
+    } else {
+      total += weeks + " weeks ";
+    }
   }
   if (days) {
-    total += days + " days ";
+    if (days === 1) {
+      total += days + " day ";
+    } else {
+      total += days + " days ";
+    }
   }
 
   console.log(total);
@@ -148,9 +155,9 @@ const getLockTime = (logs, method) => {
 export const decoder = async (tx) => {
   let provider_ = new ethers.providers.JsonRpcProvider(rpcurl);
   let recipt;
-  try{
-  recipt = await provider_.getTransactionReceipt(tx.hash);
-  }catch(err){}
+  try {
+    recipt = await provider_.getTransactionReceipt(tx.hash);
+  } catch (err) {}
   // console.log(tx.account);
   var amount = getAmount(recipt.logs, tx.action, tx.account);
   // console.log(recipt.logs, tx);

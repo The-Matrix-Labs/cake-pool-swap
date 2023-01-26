@@ -169,7 +169,7 @@ function Home() {
           amount: Math.floor(res.amount * 100) / 100 || 0,
           locktime: res.lockTime || 0,
           decoded: true,
-          usd: Math.floor(res.amount * usdPrice * 100) / 100 || 0,
+          usd: (Math.floor(res.amount * usdPrice * 100) / 100 || 0).toLocaleString(),
         };
       })
     );
@@ -423,10 +423,10 @@ function Home() {
               </div>
               <div className="flex flex-col ss:bg-transparent bg-[#027785] ss:py-0 p-[0.7rem] rounded-md align-text-center justify-center gap-y-[1px]">
                 <div className="text-white text-[1rem] leading-[1.2rem] font-thick">
-                  {Math.floor(amountLocked * 1000) / 1000}
+                  {(Math.floor(amountLocked * 1000) / 1000).toLocaleString()}
                 </div>
                 <div className="ss:text-white text-gray-200/50 items-center ss:justify-start justify-center font-thin flex text-[0.8rem] leading-[0.9rem] w-full">
-                  {Math.floor(usdPrice * amountLocked * 1000) / 1000} USD
+                  {(Math.floor(usdPrice * amountLocked * 1000) / 1000).toLocaleString()} USD
                 </div>
               </div>
             </div>
@@ -482,10 +482,10 @@ function Home() {
                 </div>
                 <div className="ss:w-full w-[50%]">
                   <div className="text-white font-bold ss:text-[2rem] text-[1.5rem] ss:leading-[1.7rem] leading-[1.3rem] mb-[10px]">
-                    {Math.floor(amountLocked * 1000) / 1000}
+                    {(Math.floor(amountLocked * 1000) / 1000).toLocaleString()}
                   </div>
                   <div className="text-white items-center font-thin flex text-[0.8rem] leading-[0.9rem]">
-                    {Math.floor(usdPrice * amountLocked * 1000) / 1000} USD
+                    {(Math.floor(usdPrice * amountLocked * 1000) / 1000).toLocaleString()} USD
                   </div>
                 </div>
               </div>
@@ -512,7 +512,7 @@ function Home() {
                     <NumberFloat n={boostYield || 0} /> x
                   </div>
                   <div className="text-white items-center font-thin flex text-[0.8rem] leading-[0.9rem]">
-                    Lock for {Math.floor(lockDuration / 7)} weeks
+                    Lock for {(Math.floor(lockDuration / 7)).toLocaleString()} weeks
                   </div>
                 </div>
               </div>
