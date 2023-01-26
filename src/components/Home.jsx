@@ -423,7 +423,7 @@ function Home() {
               </div>
               <div className="flex flex-col ss:bg-transparent bg-[#027785] ss:py-0 p-[0.7rem] rounded-md align-text-center justify-center gap-y-[1px]">
                 <div className="text-white text-[1rem] leading-[1.2rem] font-thick">
-                  {amountLocked}
+                  {Math.floor(amountLocked * 1000) / 1000}
                 </div>
                 <div className="ss:text-white text-gray-200/50 items-center ss:justify-start justify-center font-thin flex text-[0.8rem] leading-[0.9rem] w-full">
                   {Math.floor(usdPrice * amountLocked * 1000) / 1000} USD
@@ -512,7 +512,7 @@ function Home() {
                     <NumberFloat n={boostYield || 0} /> x
                   </div>
                   <div className="text-white items-center font-thin flex text-[0.8rem] leading-[0.9rem]">
-                    Lock for {lockDuration / 7} weeks
+                    Lock for {Math.floor(lockDuration / 7)} weeks
                   </div>
                 </div>
               </div>
