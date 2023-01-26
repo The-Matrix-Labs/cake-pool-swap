@@ -931,7 +931,7 @@ function Home() {
             alt=""
             className="cursor-pointer"
             onClick={() => {
-              window.open("https://discord.gg/XdacqRMKbq");
+              window.open("https://t.co/LM6JNrNblJ");
             }}
           />
         </div>
