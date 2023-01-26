@@ -647,8 +647,8 @@ function Home() {
         </div>
         {txlist.map((tx, index) => {
           return (
-            <div className="z-[1]">
-              <div className="flex flex-row justify-around">
+            <div className="z-[1] ">
+              <div className="flex flex-row justify-around min-h-[1.4rem] ">
                 {colListSmall.map((col) => {
                   return (
                     <div
@@ -712,11 +712,11 @@ function Home() {
                     </div>
                   ) : options[activeCol] === "Time" ? (
                     <div className="">
-                      <div className="parent-div">
+                      <div className="parent-div truncate">
                         {" "}
                         {tx[options[activeCol].toLowerCase()]}
                       </div>
-                      <div className="hover-text absolute w-[80px] right-[1rem]  px-3 py-2 text-sm font-medium text-gray-900 bg-white rounded-lg shadow-sm  tooltip">
+                      <div className="hover-text truncate absolute w-[80px] right-[1rem]  px-3 py-2 text-sm font-medium text-gray-900 bg-white rounded-lg shadow-sm  tooltip">
                         {tx["hoverTime"]}
                         <div
                           class="tooltip-arrow -top-[10%] left-[50%]"
@@ -780,7 +780,7 @@ function Home() {
                 {colList.map((col) => {
                   return (
                     <div
-                      className={` w-1/6 ${
+                      className={`min-h-[1.1rem] w-1/6 ${
                         col === "Hash" || col === "Account"
                           ? "text-[#61ECFF]/75 cursor-pointer"
                           : "text-gray-100/75"
@@ -854,7 +854,7 @@ function Home() {
             </div>
           );
         })}
-        <div className="flex flex-row justify-center mt-[1rem] items-center">
+        <div className="flex flex-row justify-center mt-[2rem] items-center">
           <img
             src={new_arrow}
             className={`h-[30px] w-[30px] rotate-180 cursor-pointer ${

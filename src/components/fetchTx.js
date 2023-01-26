@@ -19,21 +19,34 @@ const format = (seconds) => {
 
   var t = Array();
   if (0 < days) {
-    t.push(Math.floor(days) + " day");
+    if (days === 1) {
+      t.push(Math.floor(days) + " day");
+    } else {
+      t.push(Math.floor(days) + " days");
+    }
   }
   if (0 < hours) {
-    t.push(Math.floor(hours) + " hr");
+    if (hours === 1) {
+      t.push(Math.floor(hours) + " hr");
+    } else {
+      t.push(Math.floor(hours) + " hrs");
+    }
   }
   if (0 < minutes) {
-    t.push(Math.floor(minutes) + " m");
+    if (minutes === 1) {
+      t.push(Math.floor(minutes) + " min");
+    } else {
+      t.push(Math.floor(minutes) + " mins");
+    }
   }
   if (0 < seconds) {
-    t.push(Math.floor(seconds) + " s");
+    if (seconds === 1) {
+      t.push(Math.floor(seconds) + " sec");
+    } else {
+      t.push(Math.floor(seconds) + " sec");
+    }
   }
-  if (t.length > 1) {
-    return t[0] + "," + t[1];
-  }
-  return t[0];
+  return t[0] + " ago";
 };
 
 export const fetchTx = async () => {
@@ -64,7 +77,8 @@ export const fetchTx = async () => {
             action: data.functionName.split("(")[0],
             time: format(new Date().getTime() - data.timeStamp * 1000),
             hoverTime:
-              new Date(data.timeStamp * 1000).toLocaleDateString() +" " +
+              new Date(data.timeStamp * 1000).toLocaleDateString() +
+              " " +
               new Date(data.timeStamp * 1000).toLocaleTimeString("en-US"),
             decoded: false,
           };
