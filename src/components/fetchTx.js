@@ -31,7 +31,7 @@ const format = (seconds) => {
     t.push(Math.floor(seconds) + " s");
   }
   if (t.length > 1) {
-    t[0] + "," + t[1];
+    return t[0] + "," + t[1];
   }
   return t[0];
 };
