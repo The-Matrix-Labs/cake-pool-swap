@@ -169,7 +169,9 @@ function Home() {
           amount: Math.floor(res.amount * 100) / 100 || 0,
           locktime: res.lockTime || 0,
           decoded: true,
-          usd: (Math.floor(res.amount * usdPrice * 100) / 100 || 0).toLocaleString(),
+          usd: (
+            Math.floor(res.amount * usdPrice * 100) / 100 || 0
+          ).toLocaleString(),
         };
       })
     );
@@ -426,7 +428,10 @@ function Home() {
                   {(Math.floor(amountLocked * 1000) / 1000).toLocaleString()}
                 </div>
                 <div className="ss:text-white text-gray-200/50 items-center ss:justify-start justify-center font-thin flex text-[0.8rem] leading-[0.9rem] w-full">
-                  {(Math.floor(usdPrice * amountLocked * 1000) / 1000).toLocaleString()} USD
+                  {(
+                    Math.floor(usdPrice * amountLocked * 1000) / 1000
+                  ).toLocaleString()}{" "}
+                  USD
                 </div>
               </div>
             </div>
@@ -485,7 +490,10 @@ function Home() {
                     {(Math.floor(amountLocked * 1000) / 1000).toLocaleString()}
                   </div>
                   <div className="text-white items-center font-thin flex text-[0.8rem] leading-[0.9rem]">
-                    {(Math.floor(usdPrice * amountLocked * 1000) / 1000).toLocaleString()} USD
+                    {(
+                      Math.floor(usdPrice * amountLocked * 1000) / 1000
+                    ).toLocaleString()}{" "}
+                    USD
                   </div>
                 </div>
               </div>
@@ -512,7 +520,8 @@ function Home() {
                     <NumberFloat n={boostYield || 0} /> x
                   </div>
                   <div className="text-white items-center font-thin flex text-[0.8rem] leading-[0.9rem]">
-                    Lock for {(Math.floor(lockDuration / 7)).toLocaleString()} weeks
+                    Lock for {Math.floor(lockDuration / 7).toLocaleString()}{" "}
+                    weeks
                   </div>
                 </div>
               </div>
@@ -707,7 +716,7 @@ function Home() {
                   ) : options[activeCol] === "Amount" ? (
                     <div className="flex flex-row justify-center items-center">
                       <div className="mr-[0.6rem] truncate">
-                        {tx[options[activeCol].toLowerCase()]}
+                        {tx[options[activeCol].toLowerCase()].toLocaleString()}
                       </div>
                     </div>
                   ) : options[activeCol] === "Time" ? (
@@ -824,7 +833,7 @@ function Home() {
                       ) : col === "Amount" ? (
                         <div className="flex flex-row justify-center items-center">
                           <div className="mr-[0.6rem] truncate">
-                            {tx[col.toLowerCase()]}
+                            {tx[col.toLowerCase()].toLocaleString()}
                           </div>
                         </div>
                       ) : col === "Time" ? (
