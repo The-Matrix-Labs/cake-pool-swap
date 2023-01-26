@@ -82,6 +82,8 @@ function Home() {
   const [activeCol, setActiveCol] = useState(0);
   const [colListSmall, setColListSmall] = useState(["Hash", "Account"]);
   const [dropDown, setDropDown] = useState(false);
+  const [userAddress, setUserAddress] = useState();
+  const [inputField, setInputField] = useState();
 
   const [options, setOptions] = useState([
     "Action",
@@ -119,7 +121,7 @@ function Home() {
     getPoolInfo();
     getUserInfo();
     priceFinder();
-  }, [signer]);
+  }, [signer, userAddress]);
 
   const fetchData = () => {
     getPoolInfo();
@@ -270,6 +272,7 @@ function Home() {
   };
 
   const getUserInfo = async () => {
+    console.log("hello world");
     let rpcUrl = Values.rpcURl;
     let provider_ = new ethers.providers.JsonRpcProvider(rpcUrl);
     let stake_temp = new ethers.Contract(
@@ -283,7 +286,9 @@ function Home() {
       provider_
     );
     // console.log(token_temp);
-    var userinfo = await stake_temp.userInfo(signer?.getAddress());
+    var userinfo = await stake_temp.userInfo(
+      userAddress || signer?.getAddress()
+    );
     var startTime = parseInt(userinfo.lockStartTime);
     var endTime = parseInt(userinfo.lockEndTime);
     var duration = Math.max(endTime - new Date().getTime() / 1000, 0);
@@ -363,7 +368,29 @@ function Home() {
         </div>
         {<ConnectButton />}
       </div>
-      <div className="flex bg-[#035D68] rounded-xl p-6 px-[2rem] md:mx-[9rem] md:my-[5rem] ss:mx-[2rem]  my-[1rem] mx-[10px] justify-around flex-col ">
+      <div className="flex bg-[#035D68] rounded-xl p-6 px-[2rem] justify-around flex-row md:mx-[9rem] md:mt-[5rem] ss:mx-[2rem]  mt-[1rem] mx-[10px]">
+        <div className="text-white items-center font-bold flex ">
+          Wallet Address:
+        </div>
+        <input
+          className="w-[55%] rounded-md h-[2rem] px-[12px] mr-[1rem]"
+          placeholder="Address"
+          value={inputField}
+          onChange={(e) => {
+            setInputField(e.target.value);
+          }}
+        />
+        <button
+          type="button"
+          className="ss:w-[10rem] w-[4rem] bg-blue-600 rounded-md p-2"
+          onClick={() => {
+            setUserAddress(inputField);
+          }}
+        >
+          Check
+        </button>
+      </div>
+      <div className="flex bg-[#035D68] rounded-xl p-6 px-[2rem] md:mx-[9rem] md:mb-[5rem] ss:mx-[2rem]  my-[1rem] mx-[10px] justify-around flex-col ">
         <div className="flex w-full justify-between ss:flex-row flex-col gap-y-[0.3rem]">
           <div className="flex ss:w-[20%] w-full flex-col ss:justify-start justify-center ">
             <div className="text-white mb-[1rem] ss:text-[0.9rem] ss:leading-[1rem] text-[0.7rem] leading-[0.9rem] text-gray-100/50">
@@ -482,7 +509,7 @@ function Home() {
                 </div>
                 <div className="ss:w-full w-[50%]">
                   <div className="text-white font-bold ss:text-[2rem] text-[1.5rem] ss:leading-[1.7rem] leading-[1.3rem] mb-[10px] flex flex-row">
-                    <NumberFloat n={boostYield} /> x
+                    <NumberFloat n={boostYield || 0} /> x
                   </div>
                   <div className="text-white items-center font-thin flex text-[0.8rem] leading-[0.9rem]">
                     Lock for {lockDuration / 7} weeks
@@ -683,6 +710,14 @@ function Home() {
                         {tx[options[activeCol].toLowerCase()]}
                       </div>
                     </div>
+                  ) : options[activeCol] === "Time" ? (
+                    <div>
+                      <div className="parent-div">
+                        {" "}
+                        {tx[options[activeCol].toLowerCase()]}
+                      </div>
+                      {/* <span className="hover-text">{tx["hoverTime"]}</span> */}
+                    </div>
                   ) : (
                     tx[options[activeCol].toLowerCase()]
                   )}
@@ -785,6 +820,16 @@ function Home() {
                           <div className="mr-[0.6rem] truncate">
                             {tx[col.toLowerCase()]}
                           </div>
+                        </div>
+                      ) : col === "Time" ? (
+                        <div className="relative">
+                          <div className="parent-div">
+                            {" "}
+                            {tx[col.toLowerCase()]}
+                          </div>
+                          {/* <span className="hover-text absolute">
+                            {tx["hoverTime"]}
+                          </span> */}
                         </div>
                       ) : (
                         tx[col.toLowerCase()]

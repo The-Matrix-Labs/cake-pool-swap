@@ -198,3 +198,20 @@ mark {
   margin-top: 10px;
   height: 100%;
 }
+
+.parent-div {
+}
+
+.hover-text {
+  display: block !important;
+  z-index: 10;
+  width: 20px;
+  height: 20px !important;
+  position: absolute;
+  color: black;
+}
+
+.parent-div:hover + .hover-text {
+  display: none;
+  color: red;
+}

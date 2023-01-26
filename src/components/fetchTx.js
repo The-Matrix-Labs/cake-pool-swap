@@ -7,6 +7,35 @@ import { decoder } from "./decode";
 const url =
   "https://api.bscscan.com/api?module=account&action=txlist&address=0x45c54210128a065de780C4B0Df3d16664f7f859e&startblock=0&endblock=99999999&page=1&offset=1000&sort=desc&apikey=22WN293I44ACISW4Y5ZFZ5RMPZMVBXK3QM";
 
+const format = (seconds) => {
+  seconds = seconds / 1000;
+  // day, h, m and s
+  var days = Math.floor(seconds / (24 * 60 * 60));
+  seconds -= days * (24 * 60 * 60);
+  var hours = Math.floor(seconds / (60 * 60));
+  seconds -= hours * (60 * 60);
+  var minutes = Math.floor(seconds / 60);
+  seconds -= minutes * 60;
+
+  var t = Array();
+  if (0 < days) {
+    t.push(Math.floor(days) + " day");
+  }
+  if (0 < hours) {
+    t.push(Math.floor(hours) + " hr");
+  }
+  if (0 < minutes) {
+    t.push(Math.floor(minutes) + " m");
+  }
+  if (0 < seconds) {
+    t.push(Math.floor(seconds) + " s");
+  }
+  if (t.length > 1) {
+    t[0] + "," + t[1];
+  }
+  return t[0];
+};
+
 export const fetchTx = async () => {
   let rpcUrl = Values.rpcURl;
   let provider_ = new ethers.providers.JsonRpcProvider(rpcUrl);
@@ -33,7 +62,7 @@ export const fetchTx = async () => {
             input: data.input,
             hash: data.hash,
             action: data.functionName.split("(")[0],
-            time: new Date(data.timeStamp * 1000).toLocaleDateString("en-US"),
+            time: format(new Date().getTime() - data.timeStamp * 1000),
             hoverTime: new Date(data.timeStamp * 1000).toLocaleTimeString(
               "en-US"
             ),
