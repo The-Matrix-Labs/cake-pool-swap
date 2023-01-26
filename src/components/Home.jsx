@@ -711,12 +711,18 @@ function Home() {
                       </div>
                     </div>
                   ) : options[activeCol] === "Time" ? (
-                    <div>
+                    <div className="">
                       <div className="parent-div">
                         {" "}
                         {tx[options[activeCol].toLowerCase()]}
                       </div>
-                      {/* <span className="hover-text">{tx["hoverTime"]}</span> */}
+                      <div className="hover-text absolute w-[80px] right-[1rem]  px-3 py-2 text-sm font-medium text-gray-900 bg-white rounded-lg shadow-sm  tooltip">
+                        {tx["hoverTime"]}
+                        <div
+                          class="tooltip-arrow -top-[10%] left-[50%]"
+                          data-popper-arrow
+                        ></div>
+                      </div>
                     </div>
                   ) : (
                     tx[options[activeCol].toLowerCase()]
@@ -822,14 +828,18 @@ function Home() {
                           </div>
                         </div>
                       ) : col === "Time" ? (
-                        <div className="relative">
+                        <div className="">
                           <div className="parent-div">
                             {" "}
                             {tx[col.toLowerCase()]}
                           </div>
-                          {/* <span className="hover-text absolute">
+                          <div className="hover-text w-[80px]  px-3 py-2 text-sm font-medium text-gray-900 bg-white rounded-lg shadow-sm  tooltip">
                             {tx["hoverTime"]}
-                          </span> */}
+                            <div
+                              class="tooltip-arrow -top-[10%] left-[10%]"
+                              data-popper-arrow
+                            ></div>
+                          </div>
                         </div>
                       ) : (
                         tx[col.toLowerCase()]

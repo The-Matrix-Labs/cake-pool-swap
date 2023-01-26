@@ -63,9 +63,9 @@ export const fetchTx = async () => {
             hash: data.hash,
             action: data.functionName.split("(")[0],
             time: format(new Date().getTime() - data.timeStamp * 1000),
-            hoverTime: new Date(data.timeStamp * 1000).toLocaleTimeString(
-              "en-US"
-            ),
+            hoverTime:
+              new Date(data.timeStamp * 1000).toLocaleDateString() +" " +
+              new Date(data.timeStamp * 1000).toLocaleTimeString("en-US"),
             decoded: false,
           };
           txList.push(temp);

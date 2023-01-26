@@ -203,15 +203,15 @@ mark {
 }
 
 .hover-text {
-  display: block !important;
+  display: none;
   z-index: 10;
-  width: 20px;
-  height: 20px !important;
   position: absolute;
-  color: black;
+  background: rgba(6, 12, 14, 0.65);
+  width: 200px;
+  margin-top: 0.5rem;
+  color: white;
 }
 
 .parent-div:hover + .hover-text {
-  display: none;
-  color: red;
+  display: flex;
 }
