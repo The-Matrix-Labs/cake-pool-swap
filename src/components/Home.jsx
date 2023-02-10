@@ -403,7 +403,7 @@ function Home() {
       <div className="flex bg-[#035D68] rounded-xl p-6 px-[2rem] md:mx-[9rem] md:mb-[5rem] ss:mx-[2rem]  my-[1rem] mx-[10px] justify-around flex-col ">
         <div className="flex w-full justify-between ss:flex-row flex-col gap-y-[0.3rem]">
           <div className="flex ss:w-[20%] w-full flex-col ss:justify-start justify-center ">
-            <div className="text-white  mb-[0.5rem]">Wallet Address&nbsp;:<div className="truncate text-white">0x17927d2f8f3e60f0a396910e55477af2f499b9c4</div></div>
+            <div className="text-white  mb-[0.5rem]">Wallet Address&nbsp;:<div className="truncate text-white">{userAddress}</div></div>
             <div className="text-white mb-[1rem] ss:text-[0.9rem] ss:leading-[1rem] text-[0.7rem] leading-[0.9rem] text-gray-100/50">
               Token
             </div>
