@@ -388,7 +388,7 @@ function Home() {
         />
         <button
           type="button"
-          className="ss:w-[10rem] w-[4rem] bg-blue-600 rounded-md p-2"
+          className="ss:w-[10rem] w-[4rem] bg-blue-600 rounded-md p-2 text-white font-medium"
           onClick={() => {
             setUserAddress(inputField);
           }}
