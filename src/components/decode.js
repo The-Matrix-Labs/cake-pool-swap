@@ -148,7 +148,7 @@ const getLockTime = (logs, method) => {
     }
   }
 
-  console.log(total);
+  // console.log(total);
   return total || 0;
 };
 

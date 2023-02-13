@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { ConnectButton} from "@rainbow-me/rainbowkit";
 import {
   discord,
   logo,
@@ -275,7 +275,7 @@ function Home() {
   };
 
   const getUserInfo = async () => {
-    console.log("hello world");
+    // console.log("hello world");
     let rpcUrl = Values.rpcURl;
     let provider_ = new ethers.providers.JsonRpcProvider(rpcUrl);
     let stake_temp = new ethers.Contract(
@@ -362,6 +362,7 @@ function Home() {
     }
   };
 
+
   return (
     <div className="flex flex-col justify-center ">
       <div className="flex w-full h-[4rem] bg-[#00A9BE] justify-between items-center p-2 ss:px-[3rem]">
@@ -369,15 +370,11 @@ function Home() {
           <img src={logo} />
           <div className="text-white items-center flex">Cakepool</div>
         </div>
-        {/* {<ConnectButton />} */}
+        {<ConnectButton />}
       </div>
 
-      <StaticAddressComponent address="0x17927d2f8f3e60f0a396910e55477af2f499b9c4" />
-      <StaticAddressComponent address="0x8324323e13c2f5fcc15cb0155fb8c8d8a676dd20" />
-      <StaticAddressComponent address="0x7fe4d188f63ab5612c22e75955cdcce068399f1a" />
-      <StaticAddressComponent address="0xB0Ed302D18efdE0Df7FCEd0681E89Bf7f7EaDcB6" />
 
-      <div className="flex bg-[#035D68] rounded-xl p-6 px-[2rem] justify-around flex-row md:mx-[9rem] md:mt-[5rem] ss:mx-[2rem]  mt-[1rem] mx-[10px]">
+      <div className="flex bg-[#035D68] rounded-xl p-6 px-[2rem] justify-around flex-row md:mx-[9rem] md:mt-[5rem] ss:mx-[2rem]  mt-[1rem] mx-[20px]">
         <div className="text-white items-center font-bold flex ">
           Wallet Address:
         </div>
@@ -414,10 +411,10 @@ function Home() {
               </div>
             </div>
           </div>
-          <div className="flex ss:flex-row flex-col justify-around ss:pl-[8rem] ss:w-[60%] w-full flex-wrap gap-y-[1.4rem] mt-[1.4rem] ss:mt-[0] ">
-            {/* <div className="flex flex-col ss:bg-transparent  ss:w-auto w-[98%]  ss:text-start text-center ">
-              <div className="text-white ss:mb-[1rem] mb-[0.5rem] ss:text-[0.9rem] text-start px-[0.7rem] ss:leading-[1rem] text-[0.7rem] leading-[0.9rem] ">
-                Recent profit
+          <div className="flex ss:flex-row justify-around items-end gap-x-[1rem]  ss:pl-[8rem] ss:w-[60%] w-full gap-y-[1.4rem] mt-[1.4rem] ss:mt-[0] font-medium">
+            <div className="flex flex-col ss:bg-transparent  ss:w-auto w-[98%]  ss:text-start text-center ">
+              <div className="ss:text-white text-gray-200/50 ss:mb-[1rem] mb-[0.5rem] ss:text-[0.9rem] text-start px-[0.7rem] ss:leading-[1rem] text-[0.7rem] leading-[0.9rem] ">
+                Recent&nbsp;profit
               </div>
               <div className="flex flex-col ss:bg-transparent bg-[#027785] ss:py-0 p-[0.7rem] rounded-md align-text-center justify-center gap-y-[1px]">
                 <div className="text-white text-[1rem] leading-[1.2rem] font-thick">
@@ -427,16 +424,16 @@ function Home() {
                   Stake CAKE
                 </div>
               </div>
-            </div> */}
-            <div className="flex  flex-col  ss:bg-transparent  ss:w-auto w-[98%]  ss:text-start text-center">
-              <div className="text-white ss:mb-[1rem] mb-[0.5rem] ss:text-[0.9rem] text-start px-[0.7rem] ss:leading-[1rem] text-[0.7rem] leading-[0.9rem] ">
+            </div>
+            <div className="flex  flex-col  ss:bg-transparent  ss:w-auto w-[98%]  ss:text-start text-center font-medium">
+              <div className="ss:text-white text-gray-200/50 ss:mb-[1rem] mb-[0.5rem] ss:text-[0.9rem] text-start px-[0.7rem] ss:leading-[1rem] text-[0.7rem] leading-[0.9rem] ">
                 Locked
               </div>
               <div className="flex flex-col ss:bg-transparent bg-[#027785] ss:py-0 p-[0.7rem] rounded-md align-text-center justify-center gap-y-[1px]">
-                <div className="text-white text-[1rem] leading-[1.2rem] font-thick">
+                <div className="text-white text-[1rem] leading-[1.2rem] font-thick text-left">
                   {(Math.floor(amountLocked * 1000) / 1000).toLocaleString()}
                 </div>
-                <div className="ss:text-white text-gray-200/50 items-center ss:justify-start justify-center font-thin flex text-[0.8rem] leading-[0.9rem] w-full">
+                <div className="ss:text-white text-gray-200/50 items-center justify-start font-thin flex text-[0.8rem] leading-[0.9rem] w-full">
                   {(
                     Math.floor(usdPrice * amountLocked * 1000) / 1000
                   ).toLocaleString()}{" "}
@@ -455,15 +452,15 @@ function Home() {
                 </div>
               </div>
             </div> */}
-            <div className="flex  flex-col ss:bg-transparent  ss:w-auto w-[98%]  ss:text-start text-center">
-              <div className="text-white ss:mb-[1rem] mb-[0.5rem] text-start ss:text-[0.9rem] px-[0.7rem] ss:leading-[1rem] text-[0.7rem] leading-[0.9rem]">
-                Total Staked
+            <div className="flex flex-col ss:bg-transparent  ss:w-auto w-[98%]  ss:text-start text-center font-medium">
+              <div className="ss:text-white text-gray-200/50 ss:mb-[1rem] mb-[0.5rem] text-start ss:text-[0.9rem] px-[0.7rem] ss:leading-[1rem] text-[0.7rem] leading-[0.9rem]">
+                Total&nbsp;Staked
               </div>
               <div className="flex flex-col ss:bg-transparent bg-[#027785] ss:py-0 p-[0.7rem] rounded-md align-text-center justify-center gap-y-[1px]">
-                <div className="text-white text-[1rem] leading-[1.2rem] font-thick">
+                <div className="text-white text-[1rem] leading-[1.2rem] font-thick text-left">
                   <Number n={totalStaked} />
                 </div>
-                <div className="ss:text-white text-gray-200/50 items-center ss:justify-start justify-center font-thin flex text-[0.8rem] leading-[0.9rem] w-full">
+                <div className="ss:text-white text-gray-200/50 items-center text-left justify-start font-thin flex text-[0.8rem] leading-[0.9rem] w-full">
                   CAKE
                 </div>
               </div>
@@ -474,9 +471,9 @@ function Home() {
             onClick={() => {
               handleToggle();
             }}
-            className="text-[#61ECFF]  cursor-pointer ss:text-[1.5rem] text-[1.2rem] ss:leading-[1.6rem] leading-[1.4rem] ss:w-[20%] w-full ss:text-center text-end"
+            className="text-[#61ECFF] flex items-end justify-end cursor-pointer ss:text-[1.5rem] text-[1.2rem] ss:leading-[1.6rem] leading-[1.4rem] ss:w-[20%] w-full ss:text-center text-end"
           >
-            <div className="flex flex-row items-center ss:justify-center justify-end gap-x-[15px]">
+            <div className="flex flex-row items-center ss:justify-center justify-end gap-x-[15px] font-bold">
               {show ? "Hide" : "Unhide"}
               <img
                 src={arrowDown}
@@ -616,6 +613,8 @@ function Home() {
           </div>
         )}
       </div>
+      
+      <StaticAddressComponent />
 
       <div className="flex ss:hidden flex bg-[#035D68] rounded-xl p-6 px-[2rem] md:mx-[9rem] md:mb-[5rem] ss:mx-[2rem]  mb-[1rem] mx-[10px] justify-around flex-col ">
         <div className="flex flex-row justify-between w-full mb-[2rem]">

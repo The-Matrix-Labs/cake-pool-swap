@@ -64,7 +64,7 @@ export const fetchTx = async () => {
     await axios
       .get(url)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         response.data.result.map((data) => {
           var account =
             data.to != Values.stackingaddress.toLocaleLowerCase()
