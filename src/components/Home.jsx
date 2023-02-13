@@ -370,11 +370,12 @@ function Home() {
           <img src={logo} />
           <div className="text-white items-center flex">Cakepool</div>
         </div>
-        {<ConnectButton />}
+        {/* {<ConnectButton />} */}
       </div>
 
+      <StaticAddressComponent />
 
-      <div className="flex bg-[#035D68] rounded-xl p-6 px-[2rem] justify-around flex-row md:mx-[9rem] md:mt-[5rem] ss:mx-[2rem]  mt-[1rem] mx-[20px]">
+      <div className="flex bg-[#035D68] rounded-xl p-6 px-[2rem] justify-around flex-row md:mx-[9rem] ss:mx-[2rem]  mt-[1rem] mx-[20px]">
         <div className="text-white items-center font-bold flex ">
           Wallet Address:
         </div>
@@ -397,7 +398,7 @@ function Home() {
         </button>
       </div>
       
-      <div className="flex bg-[#035D68] rounded-xl p-6 px-[2rem] md:mx-[9rem] md:mb-[5rem] ss:mx-[2rem]  my-[1rem] mx-[10px] justify-around flex-col ">
+      <div className="flex bg-[#035D68] rounded-xl p-6 px-[2rem] md:mx-[9rem] mb-[1rem] ss:mx-[2rem]  mt-[1rem] mx-[10px] justify-around flex-col ">
         <div className="flex w-full justify-between ss:flex-row flex-col gap-y-[0.3rem]">
           <div className="flex ss:w-[20%] w-full flex-col ss:justify-start justify-center ">
             <div className="text-white  mb-[0.5rem]">Wallet Address&nbsp;:<div className="truncate text-white">{userAddress}</div></div>
@@ -614,7 +615,6 @@ function Home() {
         )}
       </div>
       
-      <StaticAddressComponent />
 
       <div className="flex ss:hidden flex bg-[#035D68] rounded-xl p-6 px-[2rem] md:mx-[9rem] md:mb-[5rem] ss:mx-[2rem]  mb-[1rem] mx-[10px] justify-around flex-col ">
         <div className="flex flex-row justify-between w-full mb-[2rem]">

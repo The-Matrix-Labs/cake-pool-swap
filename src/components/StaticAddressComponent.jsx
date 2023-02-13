@@ -5,7 +5,7 @@ import StaticAddressComponentData from "./StaticAddressComponentData";
 
 function StaticAddressComponent(props) {
   return (
-    <div className="flex bg-[#035D68] rounded-xl md:mx-[9rem] ss:mx-[2rem]  my-[1rem] mx-[10px] justify-around flex-col py-2">
+    <div className="flex bg-[#035D68] rounded-xl md:mx-[9rem] ss:mx-[2rem]  mt-[2rem] mx-[10px] justify-around flex-col py-2">
       <div className="flex bg-[#035D68] gap-8 rounded-xl p-6 px-[2rem] justify-around flex-col ">
         <div className="flex w-full justify-between flex-col gap-y-[1rem]">
           <div className="text-white font-bold text-center ss:text-left ss:text-[1.5rem] text-[1.5rem] ss:leading-[1.7rem] leading-[1.3rem]">Wallet 1</div>
