@@ -13,6 +13,7 @@ module.exports = {
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
+        doughnutmonster: ['src/assets/fonts/Doughnutmonster.ttf'],
       },
     },
     screens: {

@@ -367,7 +367,7 @@ function Home() {
     <div className="flex flex-col justify-center ">
       <div className="flex w-full h-[4rem] bg-[#00A9BE] justify-between items-center p-2 ss:px-[3rem]">
         <div className="flex flex-row  align-text-center justify-center gap-x-[10px]">
-          <img src={logo} />
+          <img className="w-[60px]" src={logo} />
           <div className="text-white items-center flex">Cakepool</div>
         </div>
         {/* {<ConnectButton />} */}
@@ -906,8 +906,8 @@ function Home() {
 
       <div className="flex bottom-0 ss:flex-row flex-col gap-y-[1rem] w-full min-h-[4rem] bg-[#00A9BE] justify-between items-center p-2 ss:px-[3rem]">
         <div className="flex flex-row  align-text-center justify-center gap-x-[10px]">
-          <img src={logo} />
-          <div className="text-white items-center flex">Cakepool</div>
+          <img className="w-[60px]" src={logo} />
+          <div className="text-white items-center flex font-['doughnutmonster']">Cakepool</div>
         </div>
         <div className="flex flex-row gap-x-[10px]">
           <img
